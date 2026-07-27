@@ -10,6 +10,7 @@ import {
   CreateStudySessionDto,
   StudyAnswerResultDto,
   StudyQuestionDto,
+  StudyResultDto,
   StudySessionDto,
   SubmitProgressFeedbackDto,
   SubmitStudyAnswerDto,
@@ -172,6 +173,69 @@ export class StudyService {
 
   async getSession(id: string): Promise<StudySessionDto> {
     return toSessionDto(await this.findSession(id))
+  }
+
+  async getResult(id: string): Promise<StudyResultDto> {
+    const session = await this.findSession(id)
+
+    if (!session.completedAt) {
+      throw new BadRequestException('学习 Session 尚未完成')
+    }
+
+    const answers = await this.prisma.answerRecord.findMany({
+      where: { sessionId: id },
+      orderBy: { createdAt: 'asc' },
+      select: {
+        wordId: true,
+        questionType: true,
+        submittedAnswer: true,
+        isCorrect: true,
+        word: {
+          select: {
+            spelling: true,
+            meaning: true,
+            phonetic: true,
+            emoji: true,
+            progresses: {
+              where: { learnerId: session.learnerId },
+              take: 1,
+              select: {
+                status: true,
+                correctStreak: true,
+                correctCount: true,
+                wrongCount: true,
+                nextReviewAt: true,
+              },
+            },
+          },
+        },
+      },
+    })
+
+    const resultAnswers = answers.map((answer) => ({
+      wordId: answer.wordId,
+      spelling: answer.word.spelling,
+      meaning: answer.word.meaning,
+      phonetic: answer.word.phonetic,
+      emoji: answer.word.emoji,
+      questionType: answer.questionType,
+      submittedAnswer: answer.submittedAnswer,
+      isCorrect: answer.isCorrect,
+      correctAnswer: this.getCorrectAnswer(answer.questionType, answer.word),
+      progress: answer.word.progresses[0]
+        ? toProgressDto(answer.word.progresses[0])
+        : null,
+    }))
+
+    return {
+      session: toSessionDto(session),
+      wrongCount: resultAnswers.filter((answer) => !answer.isCorrect).length,
+      accuracy:
+        session.totalCount === 0
+          ? 0
+          : Math.round((session.correctCount / session.totalCount) * 100),
+      answers: resultAnswers,
+    }
   }
 
   async getQuestions(id: string): Promise<StudyQuestionDto[]> {
@@ -438,7 +502,10 @@ export class StudyService {
     return question
   }
 
-  private getCorrectAnswer(questionType: QuestionType, word: StudyWord): string {
+  private getCorrectAnswer(
+    questionType: QuestionType,
+    word: Pick<StudyWord, 'spelling' | 'meaning'>,
+  ): string {
     return questionType === QuestionType.EN_TO_ZH ? word.meaning : word.spelling
   }
 }

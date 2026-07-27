@@ -54,6 +54,7 @@ describe('StudyService', () => {
     learner: { findUnique: vi.fn() },
     unit: { findUnique: vi.fn() },
     word: { findMany: vi.fn(), findUnique: vi.fn() },
+    answerRecord: { findMany: vi.fn() },
     wordProgress: { upsert: vi.fn() },
     studySession: { create: vi.fn(), findUnique: vi.fn(), update: vi.fn() },
     $transaction: vi.fn(async (callback: (tx: typeof transaction) => Promise<unknown>) =>
@@ -170,6 +171,66 @@ describe('StudyService', () => {
       completedAt,
     })
     expect(prisma.studySession.update).toHaveBeenCalledOnce()
+  })
+
+  it('returns the completed session result with answer details', async () => {
+    const completedAt = new Date('2026-07-27T12:10:00.000Z')
+    vi.mocked(prisma.studySession.findUnique).mockResolvedValue({
+      ...session,
+      correctCount: 2,
+      completedAt,
+      _count: { answers: 3 },
+    } as never)
+    vi.mocked(prisma.answerRecord.findMany).mockResolvedValue([
+      {
+        wordId: 'word-1',
+        questionType: QuestionType.EN_TO_ZH,
+        submittedAnswer: '你好；喂',
+        isCorrect: true,
+        word: {
+          ...words[0],
+          progresses: [
+            {
+              status: WordStatus.LEARNING,
+              correctStreak: 1,
+              correctCount: 1,
+              wrongCount: 0,
+              nextReviewAt: new Date('2026-07-28T12:00:00.000Z'),
+            },
+          ],
+        },
+      },
+      {
+        wordId: 'word-2',
+        questionType: QuestionType.ZH_TO_EN,
+        submittedAnswer: 'thank',
+        isCorrect: false,
+        word: {
+          ...words[1],
+          progresses: [
+            {
+              status: WordStatus.LEARNING,
+              correctStreak: 0,
+              correctCount: 0,
+              wrongCount: 1,
+              nextReviewAt: new Date('2026-07-28T12:00:00.000Z'),
+            },
+          ],
+        },
+      },
+    ] as never)
+
+    await expect(service.getResult('session-1')).resolves.toMatchObject({
+      wrongCount: 1,
+      accuracy: 67,
+      answers: [
+        { wordId: 'word-1', correctAnswer: '你好；喂', isCorrect: true },
+        { wordId: 'word-2', correctAnswer: 'thanks', isCorrect: false },
+      ],
+    })
+    expect(prisma.answerRecord.findMany).toHaveBeenCalledWith(
+      expect.objectContaining({ where: { sessionId: 'session-1' } }),
+    )
   })
 
   it('persists card feedback for the next review', async () => {

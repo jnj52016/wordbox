@@ -100,6 +100,26 @@ export type StudyAnswerResult = {
   progress: WordProgress
 }
 
+export type StudyResultAnswer = {
+  wordId: string
+  spelling: string
+  meaning: string
+  phonetic: string | null
+  emoji: string | null
+  questionType: QuestionType
+  submittedAnswer: string | null
+  isCorrect: boolean
+  correctAnswer: string
+  progress: WordProgress | null
+}
+
+export type StudyResult = {
+  session: StudySession
+  wrongCount: number
+  accuracy: number
+  answers: StudyResultAnswer[]
+}
+
 async function request<T>(path: string, init?: RequestInit): Promise<T> {
   const headers = new Headers(init?.headers)
   if (init?.body) {
@@ -161,6 +181,7 @@ export const api = {
       body: JSON.stringify(input),
     }),
   getStudySession: (id: string) => request<StudySession>(`/study-sessions/${id}`),
+  getStudyResult: (id: string) => request<StudyResult>(`/study-sessions/${id}/result`),
   getStudyQuestions: (id: string) =>
     request<StudyQuestion[]>(`/study-sessions/${id}/questions`),
   submitStudyAnswer: (

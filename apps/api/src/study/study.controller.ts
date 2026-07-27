@@ -20,6 +20,7 @@ import {
   SubmitProgressFeedbackDto,
   StudyAnswerResultDto,
   StudyQuestionDto,
+  StudyResultDto,
   StudySessionDto,
   SubmitStudyAnswerDto,
   WordProgressDto,
@@ -39,6 +40,15 @@ export class StudyController {
   @ApiNotFoundResponse({ description: '学习者或单元不存在' })
   createSession(@Body() dto: CreateStudySessionDto): Promise<StudySessionDto> {
     return this.studyService.createSession(dto)
+  }
+
+  @Get(':id/result')
+  @ApiOperation({ summary: '获取学习结果' })
+  @ApiOkResponse({ type: StudyResultDto })
+  @ApiBadRequestResponse({ description: '学习 Session 尚未完成' })
+  @ApiNotFoundResponse({ description: '学习 Session 不存在' })
+  getResult(@Param('id') id: string): Promise<StudyResultDto> {
+    return this.studyService.getResult(id)
   }
 
   @Get(':id')

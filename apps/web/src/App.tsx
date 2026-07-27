@@ -4,6 +4,7 @@ import { BookDetailPage } from './pages/BookDetailPage'
 import { BooksPage } from './pages/BooksPage'
 import { LearnPage } from './pages/LearnPage'
 import { QuizPage } from './pages/QuizPage'
+import { ResultPage } from './pages/ResultPage'
 import { SettingsPage } from './pages/SettingsPage'
 import { UnitWordsPage } from './pages/UnitWordsPage'
 import { useLearner } from './learner/useLearner'
@@ -59,6 +60,7 @@ export default function App() {
           <Route path="/units/:unitId/words" element={<UnitWordsPage />} />
           <Route path="/learn/:unitId" element={<LearnPage />} />
           <Route path="/quiz/:sessionId" element={<QuizPage />} />
+          <Route path="/result/:sessionId" element={<ResultPage />} />
           <Route path="/settings" element={<SettingsPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>

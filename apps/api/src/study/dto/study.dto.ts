@@ -172,3 +172,49 @@ export class StudyAnswerResultDto {
   @ApiProperty({ type: WordProgressDto })
   progress!: WordProgressDto
 }
+
+export class StudyResultAnswerDto {
+  @ApiProperty({ example: 'clxword123' })
+  wordId!: string
+
+  @ApiProperty({ example: 'hello' })
+  spelling!: string
+
+  @ApiProperty({ example: '你好；喂' })
+  meaning!: string
+
+  @ApiPropertyOptional({ nullable: true, example: '/həˈloʊ/' })
+  phonetic!: string | null
+
+  @ApiPropertyOptional({ nullable: true, example: '👋' })
+  emoji!: string | null
+
+  @ApiProperty({ enum: QuestionType })
+  questionType!: QuestionType
+
+  @ApiPropertyOptional({ nullable: true, example: '哈喽' })
+  submittedAnswer!: string | null
+
+  @ApiProperty({ example: true })
+  isCorrect!: boolean
+
+  @ApiProperty({ example: '你好；喂' })
+  correctAnswer!: string
+
+  @ApiProperty({ type: WordProgressDto, nullable: true })
+  progress!: WordProgressDto | null
+}
+
+export class StudyResultDto {
+  @ApiProperty({ type: StudySessionDto })
+  session!: StudySessionDto
+
+  @ApiProperty({ example: 3 })
+  wrongCount!: number
+
+  @ApiProperty({ example: 70 })
+  accuracy!: number
+
+  @ApiProperty({ type: [StudyResultAnswerDto] })
+  answers!: StudyResultAnswerDto[]
+}

@@ -297,6 +297,24 @@ body {
   text-align: left;
 }
 
+.result-shell {
+  max-width: 900px;
+}
+
+.result-stat-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.result-answer-card {
+  margin-top: 24px;
+}
+
+.result-answer-card .ant-list-item-meta-avatar {
+  font-size: 24px;
+}
+
 .settings-card {
   max-width: 640px;
   margin-bottom: 20px;
@@ -355,5 +373,14 @@ body {
 
   .quiz-options {
     grid-template-columns: 1fr;
+  }
+
+  .result-stat-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .result-answer-card .ant-list-item {
+    align-items: flex-start;
+    gap: 12px;
   }
 }

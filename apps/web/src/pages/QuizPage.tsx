@@ -12,7 +12,7 @@ import {
   Typography,
 } from 'antd'
 import { Link, useNavigate, useParams } from 'react-router-dom'
-import { api, StudyAnswerResult, StudyQuestion, StudySession } from '../api/client'
+import { api, StudyAnswerResult, StudyQuestion } from '../api/client'
 import { queryKeys } from '../api/queryKeys'
 
 export function QuizPage() {
@@ -42,8 +42,6 @@ export function QuizPage() {
   const [questionIndex, setQuestionIndex] = useState(0)
   const [inputValue, setInputValue] = useState('')
   const [answerResult, setAnswerResult] = useState<StudyAnswerResult | null>(null)
-  const [completed, setCompleted] = useState(false)
-  const [completedSession, setCompletedSession] = useState<StudySession | null>(null)
 
   const questions = questionsQuery.data ?? []
   const question = questions[questionIndex]
@@ -81,10 +79,7 @@ export function QuizPage() {
     }
 
     completeMutation.mutate(undefined, {
-      onSuccess: (session) => {
-        setCompletedSession(session)
-        setCompleted(true)
-      },
+      onSuccess: (session) => navigate(`/result/${session.id}`),
     })
   }
 
@@ -106,21 +101,6 @@ export function QuizPage() {
           </Button>
         }
       />
-    )
-  }
-
-  if (completed) {
-    return (
-      <Card className="learning-complete-card">
-        <Typography.Title level={2}>测验完成</Typography.Title>
-        <Typography.Paragraph>
-          本次答对 {completedSession?.correctCount ?? sessionQuery.data.correctCount} /{' '}
-          {sessionQuery.data.totalCount} 题。
-        </Typography.Paragraph>
-        <Button type="primary" onClick={() => navigate(`/learn/${sessionQuery.data.unitId}`)}>
-          再学一轮
-        </Button>
-      </Card>
     )
   }
 
