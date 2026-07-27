@@ -1,6 +1,7 @@
 import { QuestionType, StudyMode, WordStatus } from '@prisma/client'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { PrismaService } from '../prisma/prisma.service'
+import { ProgressFeedback } from './dto/study.dto'
 import { StudyService } from './study.service'
 
 const session = {
@@ -52,7 +53,8 @@ describe('StudyService', () => {
   const prisma = {
     learner: { findUnique: vi.fn() },
     unit: { findUnique: vi.fn() },
-    word: { findMany: vi.fn() },
+    word: { findMany: vi.fn(), findUnique: vi.fn() },
+    wordProgress: { upsert: vi.fn() },
     studySession: { create: vi.fn(), findUnique: vi.fn(), update: vi.fn() },
     $transaction: vi.fn(async (callback: (tx: typeof transaction) => Promise<unknown>) =>
       callback(transaction),
@@ -65,6 +67,7 @@ describe('StudyService', () => {
     vi.mocked(prisma.learner.findUnique).mockResolvedValue({ id: 'learner-db-1' } as never)
     vi.mocked(prisma.unit.findUnique).mockResolvedValue({ id: 'unit-1' } as never)
     vi.mocked(prisma.word.findMany).mockResolvedValue(words as never)
+    vi.mocked(prisma.word.findUnique).mockResolvedValue({ id: 'word-1' } as never)
     vi.mocked(prisma.studySession.create).mockResolvedValue(session as never)
     vi.mocked(prisma.studySession.findUnique).mockResolvedValue(session as never)
   })
@@ -167,5 +170,29 @@ describe('StudyService', () => {
       completedAt,
     })
     expect(prisma.studySession.update).toHaveBeenCalledOnce()
+  })
+
+  it('persists card feedback for the next review', async () => {
+    vi.mocked(prisma.wordProgress.upsert).mockResolvedValue({
+      status: WordStatus.LEARNING,
+      correctStreak: 0,
+      correctCount: 0,
+      wrongCount: 0,
+      nextReviewAt: new Date('2026-07-28T12:00:00.000Z'),
+    } as never)
+
+    await expect(
+      service.submitProgressFeedback({
+        learnerId: 'learner-1',
+        wordId: 'word-1',
+        feedback: ProgressFeedback.FAMILIAR,
+      }),
+    ).resolves.toMatchObject({ status: WordStatus.LEARNING })
+
+    expect(prisma.wordProgress.upsert).toHaveBeenCalledWith(
+      expect.objectContaining({
+        where: { learnerId_wordId: { learnerId: 'learner-db-1', wordId: 'word-1' } },
+      }),
+    )
   })
 })

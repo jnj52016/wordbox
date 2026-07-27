@@ -17,10 +17,12 @@ import {
 } from '@nestjs/swagger'
 import {
   CreateStudySessionDto,
+  SubmitProgressFeedbackDto,
   StudyAnswerResultDto,
   StudyQuestionDto,
   StudySessionDto,
   SubmitStudyAnswerDto,
+  WordProgressDto,
 } from './dto/study.dto'
 import { StudyService } from './study.service'
 
@@ -77,5 +79,21 @@ export class StudyController {
   @ApiNotFoundResponse({ description: '学习 Session 不存在' })
   completeSession(@Param('id') id: string): Promise<StudySessionDto> {
     return this.studyService.completeSession(id)
+  }
+}
+
+@ApiTags('progress')
+@Controller('progress')
+export class ProgressController {
+  constructor(private readonly studyService: StudyService) {}
+
+  @Post('feedback')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: '提交单词学习反馈' })
+  @ApiOkResponse({ type: WordProgressDto })
+  @ApiBadRequestResponse({ description: '反馈参数不正确' })
+  @ApiNotFoundResponse({ description: '学习者或单词不存在' })
+  submitFeedback(@Body() dto: SubmitProgressFeedbackDto): Promise<WordProgressDto> {
+    return this.studyService.submitProgressFeedback(dto)
   }
 }

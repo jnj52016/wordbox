@@ -58,6 +58,8 @@ export type StudyMode = 'LEARN' | 'REVIEW'
 
 export type QuestionType = 'EN_TO_ZH' | 'ZH_TO_EN' | 'SPELLING'
 
+export type ProgressFeedback = 'UNKNOWN' | 'FAMILIAR' | 'KNOWN'
+
 export type StudySession = {
   id: string
   learnerId: string
@@ -172,5 +174,14 @@ export const api = {
   completeStudySession: (id: string) =>
     request<StudySession>(`/study-sessions/${id}/complete`, {
       method: 'POST',
+    }),
+  submitProgressFeedback: (input: {
+    learnerId: string
+    wordId: string
+    feedback: ProgressFeedback
+  }) =>
+    request<WordProgress>('/progress/feedback', {
+      method: 'POST',
+      body: JSON.stringify(input),
     }),
 }

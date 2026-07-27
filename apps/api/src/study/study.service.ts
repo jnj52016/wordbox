@@ -11,8 +11,10 @@ import {
   StudyAnswerResultDto,
   StudyQuestionDto,
   StudySessionDto,
+  SubmitProgressFeedbackDto,
   SubmitStudyAnswerDto,
   WordProgressDto,
+  ProgressFeedback,
 } from './dto/study.dto'
 import { calculateProgressUpdate, ProgressState } from './progress-rules'
 
@@ -114,6 +116,12 @@ function toSessionDto(session: {
     startedAt: session.startedAt,
     completedAt: session.completedAt,
   }
+}
+
+function addDays(date: Date, days: number): Date {
+  const result = new Date(date)
+  result.setDate(result.getDate() + days)
+  return result
 }
 
 @Injectable()
@@ -281,6 +289,54 @@ export class StudyService {
         progress: toProgressDto(progress),
       }
     })
+  }
+
+  async submitProgressFeedback(dto: SubmitProgressFeedbackDto): Promise<WordProgressDto> {
+    const learner = await this.prisma.learner.findUnique({
+      where: { publicId: dto.learnerId },
+      select: { id: true },
+    })
+    if (!learner) {
+      throw new NotFoundException('学习者不存在')
+    }
+
+    const word = await this.prisma.word.findUnique({
+      where: { id: dto.wordId },
+      select: { id: true },
+    })
+    if (!word) {
+      throw new NotFoundException('单词不存在')
+    }
+
+    const now = new Date()
+    const nextReviewAt = addDays(now, 1)
+    const progress = await this.prisma.wordProgress.upsert({
+      where: {
+        learnerId_wordId: {
+          learnerId: learner.id,
+          wordId: dto.wordId,
+        },
+      },
+      create: {
+        learnerId: learner.id,
+        wordId: dto.wordId,
+        status: dto.feedback === ProgressFeedback.KNOWN ? WordStatus.NEW : WordStatus.LEARNING,
+        correctStreak: 0,
+        lastSeenAt: now,
+        nextReviewAt: dto.feedback === ProgressFeedback.KNOWN ? null : nextReviewAt,
+      },
+      update:
+        dto.feedback === ProgressFeedback.KNOWN
+          ? { lastSeenAt: now }
+          : {
+              status: WordStatus.LEARNING,
+              ...(dto.feedback === ProgressFeedback.UNKNOWN ? { correctStreak: 0 } : {}),
+              lastSeenAt: now,
+              nextReviewAt,
+            },
+    })
+
+    return toProgressDto(progress)
   }
 
   async completeSession(id: string): Promise<StudySessionDto> {

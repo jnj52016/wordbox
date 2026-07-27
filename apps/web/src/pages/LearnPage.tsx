@@ -13,7 +13,7 @@ import {
   Typography,
 } from 'antd'
 import { Link, useNavigate, useParams } from 'react-router-dom'
-import { api, Word } from '../api/client'
+import { api, ProgressFeedback, Word } from '../api/client'
 import { queryKeys } from '../api/queryKeys'
 import { useLearner } from '../learner/useLearner'
 
@@ -41,6 +41,7 @@ export function LearnPage() {
     enabled: Boolean(unitId),
   })
   const createSessionMutation = useMutation({ mutationFn: api.createStudySession })
+  const feedbackMutation = useMutation({ mutationFn: api.submitProgressFeedback })
   const [queueIds, setQueueIds] = useState<string[] | null>(null)
   const [completedCount, setCompletedCount] = useState(0)
   const actionLock = useRef(false)
@@ -91,32 +92,55 @@ export function LearnPage() {
   }
 
   const handleFeedback = (feedback: LearningFeedback) => {
-    if (!currentWord || actionLock.current || createSessionMutation.isPending) {
+    if (
+      !currentWord ||
+      !learnerQuery.data ||
+      actionLock.current ||
+      createSessionMutation.isPending ||
+      feedbackMutation.isPending
+    ) {
       return
     }
 
     actionLock.current = true
-    const remainingIds = activeIds.slice(1)
-
-    if (feedback === 'unknown') {
-      setQueueIds([...remainingIds, currentWord.id])
-      window.setTimeout(() => {
-        actionLock.current = false
-      }, 250)
-      return
+    const feedbackMap: Record<LearningFeedback, ProgressFeedback> = {
+      unknown: 'UNKNOWN',
+      familiar: 'FAMILIAR',
+      known: 'KNOWN',
     }
+    const wordId = currentWord.id
 
-    setCompletedCount((count) => count + 1)
-    setQueueIds(remainingIds)
+    feedbackMutation.mutate(
+      { learnerId: learnerQuery.publicId, wordId, feedback: feedbackMap[feedback] },
+      {
+        onSuccess: () => {
+          const remainingIds = activeIds.slice(1)
 
-    if (remainingIds.length === 0) {
-      startQuiz()
-      return
-    }
+          if (feedback === 'unknown') {
+            setQueueIds([...remainingIds, wordId])
+            window.setTimeout(() => {
+              actionLock.current = false
+            }, 250)
+            return
+          }
 
-    window.setTimeout(() => {
-      actionLock.current = false
-    }, 250)
+          setCompletedCount((count) => count + 1)
+          setQueueIds(remainingIds)
+
+          if (remainingIds.length === 0) {
+            startQuiz()
+            return
+          }
+
+          window.setTimeout(() => {
+            actionLock.current = false
+          }, 250)
+        },
+        onError: () => {
+          actionLock.current = false
+        },
+      },
+    )
   }
 
   if (wordsQuery.isPending || learnerQuery.isPending) {
@@ -231,14 +255,22 @@ export function LearnPage() {
           <Button
             danger
             size="large"
-            disabled={learnerQuery.isPending || createSessionMutation.isPending}
+            disabled={
+              learnerQuery.isPending ||
+              createSessionMutation.isPending ||
+              feedbackMutation.isPending
+            }
             onClick={() => handleFeedback('unknown')}
           >
             不认识
           </Button>
           <Button
             size="large"
-            disabled={learnerQuery.isPending || createSessionMutation.isPending}
+            disabled={
+              learnerQuery.isPending ||
+              createSessionMutation.isPending ||
+              feedbackMutation.isPending
+            }
             onClick={() => handleFeedback('familiar')}
           >
             有印象
@@ -246,12 +278,26 @@ export function LearnPage() {
           <Button
             type="primary"
             size="large"
-            disabled={learnerQuery.isPending || createSessionMutation.isPending}
+            disabled={
+              learnerQuery.isPending ||
+              createSessionMutation.isPending ||
+              feedbackMutation.isPending
+            }
             onClick={() => handleFeedback('known')}
           >
             认识
           </Button>
         </Space>
+        {feedbackMutation.isError && (
+          <Alert
+            className="quiz-feedback"
+            type="error"
+            showIcon
+            message="学习反馈提交失败"
+            description={feedbackMutation.error.message}
+            action={<Button onClick={() => feedbackMutation.reset()}>重试</Button>}
+          />
+        )}
       </Card>
     </div>
   )

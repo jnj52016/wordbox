@@ -57,6 +57,30 @@ export class SubmitStudyAnswerDto {
   answer!: string
 }
 
+export enum ProgressFeedback {
+  UNKNOWN = 'UNKNOWN',
+  FAMILIAR = 'FAMILIAR',
+  KNOWN = 'KNOWN',
+}
+
+export class SubmitProgressFeedbackDto {
+  @ApiProperty({ example: '8b6b9f4d-2f9d-4b50-9c6c-3c0a3d7c7b2a' })
+  @IsString()
+  @IsNotEmpty()
+  @MaxLength(64)
+  learnerId!: string
+
+  @ApiProperty({ example: 'clxword123' })
+  @IsString()
+  @IsNotEmpty()
+  @MaxLength(64)
+  wordId!: string
+
+  @ApiProperty({ enum: ProgressFeedback })
+  @IsEnum(ProgressFeedback)
+  feedback!: ProgressFeedback
+}
+
 export class StudySessionDto {
   @ApiProperty({ example: 'clxsession123' })
   id!: string
