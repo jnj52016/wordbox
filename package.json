@@ -1,0 +1,31 @@
+{
+  "name": "wordbox",
+  "version": "0.1.0",
+  "private": true,
+  "description": "WordBox MVP - a lightweight vocabulary learning web app",
+  "workspaces": [
+    "apps/*"
+  ],
+  "scripts": {
+    "dev": "concurrently -k -n web,api -c blue,green \"npm run dev:web\" \"npm run dev:api\"",
+    "dev:web": "npm --workspace apps/web run dev",
+    "dev:api": "npm --workspace apps/api run start:dev",
+    "build": "npm run build:web && npm run build:api",
+    "build:web": "npm --workspace apps/web run build",
+    "build:api": "npm --workspace apps/api run build",
+    "test": "npm run test:web && npm run test:api",
+    "test:web": "npm --workspace apps/web run test",
+    "test:api": "npm --workspace apps/api run test",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "api:generate": "npm --workspace apps/api run swagger:json"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2",
+    "prettier": "^3.6.2"
+  },
+  "engines": {
+    "node": ">=20.0.0",
+    "npm": ">=10.0.0"
+  }
+}
