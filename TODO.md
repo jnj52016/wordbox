@@ -59,12 +59,13 @@ WordBox 是一个移动端适配的轻量背单词网站，核心流程为：
 WordBox/
 ├─ apps/
 │  ├─ web/                 # Vite + React + TypeScript
-│  └─ api/                 # NestJS + Prisma
+│  └─ api/                 # NestJS + TypeScript
 ├─ data/
 │  └─ words.json           # 初始单词数据
 ├─ docker-compose.yml      # 本地 PostgreSQL
-├─ package.json            # npm workspaces
-├─ package-lock.json
+├─ package.json            # pnpm workspace
+├─ pnpm-workspace.yaml
+├─ pnpm-lock.yaml
 ├─ .env.example
 ├─ README.md
 └─ TODO.md
@@ -72,39 +73,39 @@ WordBox/
 
 ## 五、阶段 1：初始化项目
 
-- [ ] 初始化根目录 `package.json`
-- [ ] 配置 npm workspaces
-- [ ] 使用 Vite 的 `react-ts` 模板创建 `apps/web`
-- [ ] 使用 Nest CLI 创建 `apps/api`
-- [ ] 配置根目录统一启动命令
-- [ ] 配置 TypeScript
+- [x] 初始化根目录 `package.json`
+- [x] 配置 pnpm workspace
+- [x] 创建 Vite + React + TypeScript 的 `apps/web`
+- [x] 创建 NestJS + TypeScript 的 `apps/api`
+- [x] 配置根目录统一启动命令
+- [x] 配置 TypeScript
 - [ ] 配置 ESLint
 - [ ] 配置 Prettier
-- [ ] 配置 Vitest
-- [ ] 添加 `.gitignore`
-- [ ] 添加 `.env.example`
-- [ ] 提交 `package-lock.json`
-- [ ] 编写基础 `README.md`
+- [x] 配置 Vitest
+- [x] 添加 `.gitignore`
+- [x] 添加 `.env.example`
+- [x] 提交 `pnpm-lock.yaml`
+- [x] 编写基础 `README.md`
 
 计划提供以下根目录命令：
 
 ```text
-npm run dev
-npm run dev:web
-npm run dev:api
-npm run test
-npm run build
-npm run db:migrate
-npm run db:seed
+pnpm dev
+pnpm dev:web
+pnpm dev:api
+pnpm test
+pnpm build
+pnpm db:migrate
+pnpm db:seed
 ```
 
 ### 阶段验收
 
-- [ ] 执行一次 `npm install` 可以安装全部依赖
+- [x] 执行一次 `pnpm install` 可以安装全部依赖
 - [ ] 一个命令可以同时启动前后端
 - [ ] 前端可以打开默认页面
-- [ ] 后端健康检查接口可以访问
-- [ ] 前后端测试命令可以运行
+- [x] 后端健康检查接口可以访问
+- [x] 前后端测试命令可以运行
 
 ## 六、阶段 2：配置 PostgreSQL 和 Prisma
 
@@ -270,15 +271,15 @@ apps/api/src/
 
 基础设施 TODO：
 
-- [ ] 配置全局 API 前缀 `/api/v1`
-- [ ] 开启全局 DTO 参数校验
-- [ ] 开启 DTO 类型转换
+- [x] 配置全局 API 前缀 `/api/v1`
+- [x] 开启全局 DTO 参数校验
+- [x] 开启 DTO 类型转换
 - [ ] 配置统一异常响应格式
-- [ ] 配置 CORS
+- [x] 配置 CORS
 - [ ] 配置环境变量校验
-- [ ] 增加 `GET /api/v1/health`
-- [ ] 配置 Swagger UI
-- [ ] 提供 OpenAPI JSON 地址
+- [x] 增加 `GET /api/v1/health`
+- [x] 配置 Swagger UI
+- [x] 提供 OpenAPI JSON 地址
 - [ ] 确定分页参数和返回格式
 
 统一错误格式建议：
@@ -391,12 +392,12 @@ apps/api/src/
 
 前端 TODO：
 
-- [ ] 安装并配置 React Router
-- [ ] 安装并配置 Ant Design
+- [x] 安装并配置 React Router
+- [x] 安装并配置 Ant Design
 - [ ] 安装并配置 Tailwind CSS
-- [ ] 安装并配置 TanStack Query
+- [x] 安装并配置 TanStack Query
 - [ ] 安装并配置 Zustand
-- [ ] 配置全局主题
+- [x] 配置全局主题
 - [ ] 建立 Query Key 工厂
 - [ ] 建立通用 Loading 组件
 - [ ] 建立通用 Empty 组件
@@ -725,4 +726,3 @@ apps/api/src/
 - 完整的艾宾浩斯算法
 - 原生 Android 或 iOS App
 - 推送通知
-
