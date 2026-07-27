@@ -19,7 +19,7 @@ describe('App', () => {
       </QueryClientProvider>,
     )
 
-    expect(screen.getByText('WordBox')).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'WordBox' })).toBeInTheDocument()
     expect(screen.getByRole('button', { name: '开始学习' })).toBeInTheDocument()
   })
 })
