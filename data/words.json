@@ -1,0 +1,141 @@
+{
+  "wordBook": {
+    "slug": "starter",
+    "name": "WordBox 入门词书",
+    "description": "适合初学者的日常英语基础词汇。",
+    "level": "BEGINNER",
+    "coverColor": "#2563eb"
+  },
+  "units": [
+    {
+      "order": 1,
+      "name": "日常基础",
+      "words": [
+        { "order": 1, "spelling": "hello", "phonetic": "/həˈloʊ/", "meaning": "你好；喂", "partOfSpeech": "interjection", "example": "Hello, how are you?", "exampleZh": "你好，你怎么样？", "emoji": "👋" },
+        { "order": 2, "spelling": "goodbye", "phonetic": "/ˌɡʊdˈbaɪ/", "meaning": "再见", "partOfSpeech": "interjection", "example": "Goodbye, see you tomorrow.", "exampleZh": "再见，明天见。", "emoji": "👋" },
+        { "order": 3, "spelling": "please", "phonetic": "/pliːz/", "meaning": "请；请问", "partOfSpeech": "adverb", "example": "Please sit here.", "exampleZh": "请坐在这里。", "emoji": "🙏" },
+        { "order": 4, "spelling": "thanks", "phonetic": "/θæŋks/", "meaning": "谢谢", "partOfSpeech": "noun", "example": "Thanks for your help.", "exampleZh": "谢谢你的帮助。", "emoji": "😊" },
+        { "order": 5, "spelling": "sorry", "phonetic": "/ˈsɑːri/", "meaning": "对不起；抱歉", "partOfSpeech": "adjective", "example": "Sorry, I am late.", "exampleZh": "对不起，我迟到了。", "emoji": "🙇" },
+        { "order": 6, "spelling": "yes", "phonetic": "/jes/", "meaning": "是；好的", "partOfSpeech": "adverb", "example": "Yes, I understand.", "exampleZh": "好的，我明白了。", "emoji": "✅" },
+        { "order": 7, "spelling": "no", "phonetic": "/noʊ/", "meaning": "不；没有", "partOfSpeech": "adverb", "example": "No, thank you.", "exampleZh": "不用了，谢谢。", "emoji": "❌" },
+        { "order": 8, "spelling": "name", "phonetic": "/neɪm/", "meaning": "名字；名称", "partOfSpeech": "noun", "example": "My name is Alex.", "exampleZh": "我的名字是 Alex。", "emoji": "🏷️" },
+        { "order": 9, "spelling": "friend", "phonetic": "/frend/", "meaning": "朋友", "partOfSpeech": "noun", "example": "She is my best friend.", "exampleZh": "她是我最好的朋友。", "emoji": "🧑‍🤝‍🧑" },
+        { "order": 10, "spelling": "family", "phonetic": "/ˈfæməli/", "meaning": "家庭；家人", "partOfSpeech": "noun", "example": "My family lives here.", "exampleZh": "我的家人住在这里。", "emoji": "👨‍👩‍👧‍👦" },
+        { "order": 11, "spelling": "home", "phonetic": "/hoʊm/", "meaning": "家；家庭住所", "partOfSpeech": "noun", "example": "I walk home after work.", "exampleZh": "我下班后走回家。", "emoji": "🏠" },
+        { "order": 12, "spelling": "school", "phonetic": "/skuːl/", "meaning": "学校", "partOfSpeech": "noun", "example": "The children go to school.", "exampleZh": "孩子们去上学。", "emoji": "🏫" },
+        { "order": 13, "spelling": "work", "phonetic": "/wɜːrk/", "meaning": "工作；工作场所", "partOfSpeech": "noun", "example": "I have a lot of work today.", "exampleZh": "我今天有很多工作。", "emoji": "💼" },
+        { "order": 14, "spelling": "day", "phonetic": "/deɪ/", "meaning": "一天；白天", "partOfSpeech": "noun", "example": "Have a nice day.", "exampleZh": "祝你今天愉快。", "emoji": "☀️" },
+        { "order": 15, "spelling": "night", "phonetic": "/naɪt/", "meaning": "夜晚", "partOfSpeech": "noun", "example": "The city is quiet at night.", "exampleZh": "这座城市在夜晚很安静。", "emoji": "🌙" },
+        { "order": 16, "spelling": "morning", "phonetic": "/ˈmɔːrnɪŋ/", "meaning": "早晨；上午", "partOfSpeech": "noun", "example": "I drink tea every morning.", "exampleZh": "我每天早上喝茶。", "emoji": "🌅" },
+        { "order": 17, "spelling": "water", "phonetic": "/ˈwɔːtər/", "meaning": "水", "partOfSpeech": "noun", "example": "Please give me some water.", "exampleZh": "请给我一些水。", "emoji": "💧" },
+        { "order": 18, "spelling": "food", "phonetic": "/fuːd/", "meaning": "食物；食品", "partOfSpeech": "noun", "example": "The food smells good.", "exampleZh": "食物闻起来很香。", "emoji": "🍱" },
+        { "order": 19, "spelling": "book", "phonetic": "/bʊk/", "meaning": "书；书籍", "partOfSpeech": "noun", "example": "This book is easy to read.", "exampleZh": "这本书很容易读。", "emoji": "📖" },
+        { "order": 20, "spelling": "time", "phonetic": "/taɪm/", "meaning": "时间；次；倍", "partOfSpeech": "noun", "example": "What time is it?", "exampleZh": "现在几点？", "emoji": "⏰" }
+      ]
+    },
+    {
+      "order": 2,
+      "name": "人物与地点",
+      "words": [
+        { "order": 1, "spelling": "person", "phonetic": "/ˈpɜːrsən/", "meaning": "人；个人", "partOfSpeech": "noun", "example": "Every person is different.", "exampleZh": "每个人都不一样。", "emoji": "🧑" },
+        { "order": 2, "spelling": "child", "phonetic": "/tʃaɪld/", "meaning": "孩子；儿童", "partOfSpeech": "noun", "example": "The child is playing outside.", "exampleZh": "那个孩子正在外面玩。", "emoji": "🧒" },
+        { "order": 3, "spelling": "parent", "phonetic": "/ˈperənt/", "meaning": "父母；家长", "partOfSpeech": "noun", "example": "A parent helps a child learn.", "exampleZh": "家长帮助孩子学习。", "emoji": "👨‍👩‍👦" },
+        { "order": 4, "spelling": "teacher", "phonetic": "/ˈtiːtʃər/", "meaning": "教师；老师", "partOfSpeech": "noun", "example": "Our teacher speaks clearly.", "exampleZh": "我们的老师讲得很清楚。", "emoji": "👩‍🏫" },
+        { "order": 5, "spelling": "student", "phonetic": "/ˈstuːdənt/", "meaning": "学生", "partOfSpeech": "noun", "example": "I am a student at this school.", "exampleZh": "我是这所学校的学生。", "emoji": "🎒" },
+        { "order": 6, "spelling": "doctor", "phonetic": "/ˈdɑːktər/", "meaning": "医生；博士", "partOfSpeech": "noun", "example": "The doctor checked my arm.", "exampleZh": "医生检查了我的胳膊。", "emoji": "🩺" },
+        { "order": 7, "spelling": "neighbor", "phonetic": "/ˈneɪbər/", "meaning": "邻居", "partOfSpeech": "noun", "example": "Our neighbor has a lovely garden.", "exampleZh": "我们的邻居有一个漂亮的花园。", "emoji": "🏡" },
+        { "order": 8, "spelling": "city", "phonetic": "/ˈsɪti/", "meaning": "城市", "partOfSpeech": "noun", "example": "This city is very busy.", "exampleZh": "这座城市非常繁忙。", "emoji": "🏙️" },
+        { "order": 9, "spelling": "country", "phonetic": "/ˈkʌntri/", "meaning": "国家；乡村", "partOfSpeech": "noun", "example": "Which country are you from?", "exampleZh": "你来自哪个国家？", "emoji": "🌍" },
+        { "order": 10, "spelling": "street", "phonetic": "/striːt/", "meaning": "街道；街", "partOfSpeech": "noun", "example": "The shop is on this street.", "exampleZh": "商店就在这条街上。", "emoji": "🛣️" },
+        { "order": 11, "spelling": "room", "phonetic": "/ruːm/", "meaning": "房间；空间", "partOfSpeech": "noun", "example": "My room is small but clean.", "exampleZh": "我的房间很小但很干净。", "emoji": "🚪" },
+        { "order": 12, "spelling": "kitchen", "phonetic": "/ˈkɪtʃən/", "meaning": "厨房", "partOfSpeech": "noun", "example": "Mom is in the kitchen.", "exampleZh": "妈妈在厨房里。", "emoji": "🍳" },
+        { "order": 13, "spelling": "office", "phonetic": "/ˈɔːfɪs/", "meaning": "办公室；办事处", "partOfSpeech": "noun", "example": "Her office is near the station.", "exampleZh": "她的办公室在车站附近。", "emoji": "🏢" },
+        { "order": 14, "spelling": "store", "phonetic": "/stɔːr/", "meaning": "商店；储存", "partOfSpeech": "noun", "example": "I bought milk at the store.", "exampleZh": "我在商店买了牛奶。", "emoji": "🛒" },
+        { "order": 15, "spelling": "park", "phonetic": "/pɑːrk/", "meaning": "公园；停车", "partOfSpeech": "noun", "example": "We walk in the park on Sundays.", "exampleZh": "我们星期天在公园散步。", "emoji": "🌳" },
+        { "order": 16, "spelling": "station", "phonetic": "/ˈsteɪʃən/", "meaning": "车站；站点", "partOfSpeech": "noun", "example": "The train leaves from platform two at the station.", "exampleZh": "火车从车站的二号站台出发。", "emoji": "🚉" },
+        { "order": 17, "spelling": "hospital", "phonetic": "/ˈhɑːspɪtəl/", "meaning": "医院", "partOfSpeech": "noun", "example": "The hospital is open all day.", "exampleZh": "这家医院全天开放。", "emoji": "🏥" },
+        { "order": 18, "spelling": "library", "phonetic": "/ˈlaɪbreri/", "meaning": "图书馆；藏书室", "partOfSpeech": "noun", "example": "I study in the library.", "exampleZh": "我在图书馆学习。", "emoji": "📚" },
+        { "order": 19, "spelling": "hotel", "phonetic": "/hoʊˈtel/", "meaning": "旅馆；酒店", "partOfSpeech": "noun", "example": "The hotel is close to the beach.", "exampleZh": "这家酒店离海滩很近。", "emoji": "🏨" },
+        { "order": 20, "spelling": "restaurant", "phonetic": "/ˈrestərɑːnt/", "meaning": "餐馆；饭店", "partOfSpeech": "noun", "example": "That restaurant serves good food.", "exampleZh": "那家餐馆供应美味的食物。", "emoji": "🍽️" }
+      ]
+    },
+    {
+      "order": 3,
+      "name": "常用动作",
+      "words": [
+        { "order": 1, "spelling": "be", "phonetic": "/biː/", "meaning": "是；存在", "partOfSpeech": "verb", "example": "I want to be a good friend.", "exampleZh": "我想成为一个好朋友。", "emoji": "🧩" },
+        { "order": 2, "spelling": "have", "phonetic": "/hæv/", "meaning": "有；拥有", "partOfSpeech": "verb", "example": "I have a new book.", "exampleZh": "我有一本新书。", "emoji": "🤲" },
+        { "order": 3, "spelling": "do", "phonetic": "/duː/", "meaning": "做；干", "partOfSpeech": "verb", "example": "What do you do after school?", "exampleZh": "你放学后做什么？", "emoji": "🔨" },
+        { "order": 4, "spelling": "go", "phonetic": "/ɡoʊ/", "meaning": "去；走", "partOfSpeech": "verb", "example": "We go to school together.", "exampleZh": "我们一起去学校。", "emoji": "🚶" },
+        { "order": 5, "spelling": "come", "phonetic": "/kʌm/", "meaning": "来；来到", "partOfSpeech": "verb", "example": "Please come in.", "exampleZh": "请进。", "emoji": "➡️" },
+        { "order": 6, "spelling": "make", "phonetic": "/meɪk/", "meaning": "制作；使得", "partOfSpeech": "verb", "example": "I can make breakfast.", "exampleZh": "我会做早餐。", "emoji": "🛠️" },
+        { "order": 7, "spelling": "take", "phonetic": "/teɪk/", "meaning": "拿；带；花费", "partOfSpeech": "verb", "example": "Take an umbrella with you.", "exampleZh": "带把伞吧。", "emoji": "👜" },
+        { "order": 8, "spelling": "give", "phonetic": "/ɡɪv/", "meaning": "给；提供", "partOfSpeech": "verb", "example": "Can you give me a hand?", "exampleZh": "你能帮我一下吗？", "emoji": "🎁" },
+        { "order": 9, "spelling": "get", "phonetic": "/ɡet/", "meaning": "得到；到达；变得", "partOfSpeech": "verb", "example": "I get home at six.", "exampleZh": "我六点到家。", "emoji": "📦" },
+        { "order": 10, "spelling": "see", "phonetic": "/siː/", "meaning": "看见；理解", "partOfSpeech": "verb", "example": "I can see the moon.", "exampleZh": "我能看见月亮。", "emoji": "👀" },
+        { "order": 11, "spelling": "know", "phonetic": "/noʊ/", "meaning": "知道；了解", "partOfSpeech": "verb", "example": "I know this word.", "exampleZh": "我知道这个单词。", "emoji": "💡" },
+        { "order": 12, "spelling": "think", "phonetic": "/θɪŋk/", "meaning": "想；认为", "partOfSpeech": "verb", "example": "I think this is a good idea.", "exampleZh": "我认为这是个好主意。", "emoji": "🤔" },
+        { "order": 13, "spelling": "want", "phonetic": "/wɑːnt/", "meaning": "想要；需要", "partOfSpeech": "verb", "example": "I want some water.", "exampleZh": "我想要一些水。", "emoji": "🙋" },
+        { "order": 14, "spelling": "need", "phonetic": "/niːd/", "meaning": "需要；必须", "partOfSpeech": "verb", "example": "We need more time.", "exampleZh": "我们需要更多时间。", "emoji": "📌" },
+        { "order": 15, "spelling": "like", "phonetic": "/laɪk/", "meaning": "喜欢；像", "partOfSpeech": "verb", "example": "I like this song.", "exampleZh": "我喜欢这首歌。", "emoji": "❤️" },
+        { "order": 16, "spelling": "use", "phonetic": "/juːz/", "meaning": "使用；利用", "partOfSpeech": "verb", "example": "Can I use your pen?", "exampleZh": "我可以用你的笔吗？", "emoji": "🖊️" },
+        { "order": 17, "spelling": "find", "phonetic": "/faɪnd/", "meaning": "找到；发现", "partOfSpeech": "verb", "example": "I cannot find my keys.", "exampleZh": "我找不到我的钥匙。", "emoji": "🔎" },
+        { "order": 18, "spelling": "help", "phonetic": "/help/", "meaning": "帮助；有助于", "partOfSpeech": "verb", "example": "This book can help you learn.", "exampleZh": "这本书可以帮助你学习。", "emoji": "🆘" },
+        { "order": 19, "spelling": "learn", "phonetic": "/lɜːrn/", "meaning": "学习；学会", "partOfSpeech": "verb", "example": "We learn new words every day.", "exampleZh": "我们每天学习新单词。", "emoji": "📘" },
+        { "order": 20, "spelling": "remember", "phonetic": "/rɪˈmembər/", "meaning": "记得；记住", "partOfSpeech": "verb", "example": "Please remember my name.", "exampleZh": "请记住我的名字。", "emoji": "🧠" }
+      ]
+    },
+    {
+      "order": 4,
+      "name": "基础描述",
+      "words": [
+        { "order": 1, "spelling": "big", "phonetic": "/bɪɡ/", "meaning": "大的；重要的", "partOfSpeech": "adjective", "example": "They live in a big city.", "exampleZh": "他们住在一座大城市里。", "emoji": "🐘" },
+        { "order": 2, "spelling": "small", "phonetic": "/smɔːl/", "meaning": "小的；少的", "partOfSpeech": "adjective", "example": "The room is small.", "exampleZh": "这个房间很小。", "emoji": "🐜" },
+        { "order": 3, "spelling": "long", "phonetic": "/lɔːŋ/", "meaning": "长的；长时间的", "partOfSpeech": "adjective", "example": "It is a long day.", "exampleZh": "这是漫长的一天。", "emoji": "📏" },
+        { "order": 4, "spelling": "short", "phonetic": "/ʃɔːrt/", "meaning": "短的；矮的", "partOfSpeech": "adjective", "example": "The meeting is short.", "exampleZh": "会议时间很短。", "emoji": "📐" },
+        { "order": 5, "spelling": "new", "phonetic": "/nuː/", "meaning": "新的；刚出现的", "partOfSpeech": "adjective", "example": "I have a new friend.", "exampleZh": "我有一个新朋友。", "emoji": "✨" },
+        { "order": 6, "spelling": "old", "phonetic": "/oʊld/", "meaning": "老的；旧的", "partOfSpeech": "adjective", "example": "This is an old book.", "exampleZh": "这是一本旧书。", "emoji": "🕰️" },
+        { "order": 7, "spelling": "good", "phonetic": "/ɡʊd/", "meaning": "好的；有益的", "partOfSpeech": "adjective", "example": "That sounds like a good plan.", "exampleZh": "听起来是个好计划。", "emoji": "👍" },
+        { "order": 8, "spelling": "bad", "phonetic": "/bæd/", "meaning": "坏的；糟糕的", "partOfSpeech": "adjective", "example": "It is a bad idea.", "exampleZh": "这是个坏主意。", "emoji": "👎" },
+        { "order": 9, "spelling": "easy", "phonetic": "/ˈiːzi/", "meaning": "容易的；轻松的", "partOfSpeech": "adjective", "example": "This question is easy.", "exampleZh": "这道题很简单。", "emoji": "😌" },
+        { "order": 10, "spelling": "difficult", "phonetic": "/ˈdɪfɪkəlt/", "meaning": "困难的；不易的", "partOfSpeech": "adjective", "example": "The last question is difficult.", "exampleZh": "最后一道题很难。", "emoji": "🧗" },
+        { "order": 11, "spelling": "happy", "phonetic": "/ˈhæpi/", "meaning": "快乐的；幸福的", "partOfSpeech": "adjective", "example": "The children look happy.", "exampleZh": "孩子们看起来很开心。", "emoji": "😄" },
+        { "order": 12, "spelling": "sad", "phonetic": "/sæd/", "meaning": "悲伤的；难过的", "partOfSpeech": "adjective", "example": "The movie made me sad.", "exampleZh": "这部电影让我很难过。", "emoji": "😢" },
+        { "order": 13, "spelling": "hot", "phonetic": "/hɑːt/", "meaning": "热的；辣的", "partOfSpeech": "adjective", "example": "The soup is hot.", "exampleZh": "汤很热。", "emoji": "🔥" },
+        { "order": 14, "spelling": "cold", "phonetic": "/koʊld/", "meaning": "冷的；寒冷的", "partOfSpeech": "adjective", "example": "The water is cold.", "exampleZh": "水很冷。", "emoji": "🥶" },
+        { "order": 15, "spelling": "fast", "phonetic": "/fæst/", "meaning": "快的；迅速的", "partOfSpeech": "adjective", "example": "This train is very fast.", "exampleZh": "这列火车非常快。", "emoji": "⚡" },
+        { "order": 16, "spelling": "slow", "phonetic": "/sloʊ/", "meaning": "慢的；缓慢的", "partOfSpeech": "adjective", "example": "The bus is slow today.", "exampleZh": "今天公交车很慢。", "emoji": "🐢" },
+        { "order": 17, "spelling": "clean", "phonetic": "/kliːn/", "meaning": "干净的；清洁的", "partOfSpeech": "adjective", "example": "Please keep your room clean.", "exampleZh": "请保持你的房间整洁。", "emoji": "🧼" },
+        { "order": 18, "spelling": "busy", "phonetic": "/ˈbɪzi/", "meaning": "忙的；繁忙的", "partOfSpeech": "adjective", "example": "I am busy this morning.", "exampleZh": "我今天早上很忙。", "emoji": "🏃" },
+        { "order": 19, "spelling": "ready", "phonetic": "/ˈredi/", "meaning": "准备好的；愿意的", "partOfSpeech": "adjective", "example": "Are you ready to start?", "exampleZh": "你准备好开始了吗？", "emoji": "🎬" },
+        { "order": 20, "spelling": "important", "phonetic": "/ɪmˈpɔːrtənt/", "meaning": "重要的", "partOfSpeech": "adjective", "example": "Sleep is important for your health.", "exampleZh": "睡眠对你的健康很重要。", "emoji": "⭐" }
+      ]
+    },
+    {
+      "order": 5,
+      "name": "时间与自然",
+      "words": [
+        { "order": 1, "spelling": "today", "phonetic": "/təˈdeɪ/", "meaning": "今天；今日", "partOfSpeech": "adverb", "example": "I feel happy today.", "exampleZh": "我今天感觉很开心。", "emoji": "📅" },
+        { "order": 2, "spelling": "tomorrow", "phonetic": "/təˈmɑːroʊ/", "meaning": "明天", "partOfSpeech": "adverb", "example": "See you tomorrow.", "exampleZh": "明天见。", "emoji": "➡️" },
+        { "order": 3, "spelling": "yesterday", "phonetic": "/ˈjestərdeɪ/", "meaning": "昨天", "partOfSpeech": "adverb", "example": "I saw him yesterday.", "exampleZh": "我昨天见到他了。", "emoji": "⬅️" },
+        { "order": 4, "spelling": "week", "phonetic": "/wiːk/", "meaning": "星期；周；一周", "partOfSpeech": "noun", "example": "I work five days a week.", "exampleZh": "我每周工作五天。", "emoji": "🗓️" },
+        { "order": 5, "spelling": "month", "phonetic": "/mʌnθ/", "meaning": "月；月份", "partOfSpeech": "noun", "example": "Next month is my birthday.", "exampleZh": "下个月是我的生日。", "emoji": "📆" },
+        { "order": 6, "spelling": "year", "phonetic": "/jɪr/", "meaning": "年；年度", "partOfSpeech": "noun", "example": "This year went by quickly.", "exampleZh": "今年过得很快。", "emoji": "🎉" },
+        { "order": 7, "spelling": "hour", "phonetic": "/ˈaʊər/", "meaning": "小时；一段时间", "partOfSpeech": "noun", "example": "The lesson lasts one hour.", "exampleZh": "这节课持续一小时。", "emoji": "⏳" },
+        { "order": 8, "spelling": "minute", "phonetic": "/ˈmɪnɪt/", "meaning": "分钟；片刻", "partOfSpeech": "noun", "example": "Wait a minute, please.", "exampleZh": "请等一下。", "emoji": "⌛" },
+        { "order": 9, "spelling": "spring", "phonetic": "/sprɪŋ/", "meaning": "春天；弹簧", "partOfSpeech": "noun", "example": "Flowers appear in spring.", "exampleZh": "花朵在春天开放。", "emoji": "🌸" },
+        { "order": 10, "spelling": "summer", "phonetic": "/ˈsʌmər/", "meaning": "夏天；夏季", "partOfSpeech": "noun", "example": "We swim in summer.", "exampleZh": "我们夏天游泳。", "emoji": "☀️" },
+        { "order": 11, "spelling": "autumn", "phonetic": "/ˈɔːtəm/", "meaning": "秋天；秋季", "partOfSpeech": "noun", "example": "The leaves turn red in autumn.", "exampleZh": "树叶在秋天变红。", "emoji": "🍂" },
+        { "order": 12, "spelling": "winter", "phonetic": "/ˈwɪntər/", "meaning": "冬天；冬季", "partOfSpeech": "noun", "example": "It gets cold in winter.", "exampleZh": "冬天会变冷。", "emoji": "❄️" },
+        { "order": 13, "spelling": "sun", "phonetic": "/sʌn/", "meaning": "太阳；阳光", "partOfSpeech": "noun", "example": "The sun is bright today.", "exampleZh": "今天阳光很明亮。", "emoji": "🌞" },
+        { "order": 14, "spelling": "moon", "phonetic": "/muːn/", "meaning": "月亮；月球", "partOfSpeech": "noun", "example": "The moon is above the trees.", "exampleZh": "月亮在树的上方。", "emoji": "🌙" },
+        { "order": 15, "spelling": "star", "phonetic": "/stɑːr/", "meaning": "星星；明星", "partOfSpeech": "noun", "example": "I can see one bright star.", "exampleZh": "我能看见一颗明亮的星星。", "emoji": "⭐" },
+        { "order": 16, "spelling": "rain", "phonetic": "/reɪn/", "meaning": "雨；下雨", "partOfSpeech": "noun", "example": "The rain stopped in the afternoon.", "exampleZh": "下午雨停了。", "emoji": "🌧️" },
+        { "order": 17, "spelling": "wind", "phonetic": "/wɪnd/", "meaning": "风；气流", "partOfSpeech": "noun", "example": "The wind is strong today.", "exampleZh": "今天风很大。", "emoji": "💨" },
+        { "order": 18, "spelling": "tree", "phonetic": "/triː/", "meaning": "树；树木", "partOfSpeech": "noun", "example": "There is a tall tree in the park.", "exampleZh": "公园里有一棵高大的树。", "emoji": "🌳" },
+        { "order": 19, "spelling": "flower", "phonetic": "/ˈflaʊər/", "meaning": "花；花朵", "partOfSpeech": "noun", "example": "This flower is beautiful.", "exampleZh": "这朵花很漂亮。", "emoji": "🌷" },
+        { "order": 20, "spelling": "river", "phonetic": "/ˈrɪvər/", "meaning": "河；江", "partOfSpeech": "noun", "example": "The river runs through the city.", "exampleZh": "这条河流经这座城市。", "emoji": "🏞️" }
+      ]
+    }
+  ]
+}
