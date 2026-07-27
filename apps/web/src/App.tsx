@@ -1,5 +1,8 @@
 import { Button, Card, Layout, Typography } from 'antd'
 import { Link, Route, Routes } from 'react-router-dom'
+import { BookDetailPage } from './pages/BookDetailPage'
+import { BooksPage } from './pages/BooksPage'
+import { UnitWordsPage } from './pages/UnitWordsPage'
 
 const { Content, Header } = Layout
 
@@ -11,7 +14,7 @@ function HomePage() {
         轻量、专注的单词学习工具。工程骨架已准备好，接下来将加入词书和学习流程。
       </Typography.Paragraph>
       <Button type="primary" size="large">
-        开始学习
+        <Link to="/books">开始学习</Link>
       </Button>
     </Card>
   )
@@ -33,10 +36,16 @@ export default function App() {
         <Link className="brand" to="/">
           WordBox
         </Link>
+        <nav className="app-nav">
+          <Link to="/books">词书</Link>
+        </nav>
       </Header>
       <Content className="app-content">
         <Routes>
           <Route path="/" element={<HomePage />} />
+          <Route path="/books" element={<BooksPage />} />
+          <Route path="/books/:bookId" element={<BookDetailPage />} />
+          <Route path="/units/:unitId/words" element={<UnitWordsPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </Content>

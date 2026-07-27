@@ -306,11 +306,11 @@ apps/api/src/
 
 ### 词书和单元
 
-- [ ] `GET /api/v1/word-books`
-- [ ] `GET /api/v1/word-books/:id`
-- [ ] `GET /api/v1/word-books/:id/units`
+- [x] `GET /api/v1/word-books`
+- [x] `GET /api/v1/word-books/:id`
+- [x] `GET /api/v1/word-books/:id/units`
 - [ ] `GET /api/v1/units/:id`
-- [ ] `GET /api/v1/units/:id/words`
+- [x] `GET /api/v1/units/:id/words`
 
 ### 单词
 
@@ -400,7 +400,7 @@ apps/api/src/
 - [x] 安装并配置 TanStack Query
 - [ ] 安装并配置 Zustand
 - [x] 配置全局主题
-- [ ] 建立 Query Key 工厂
+- [x] 建立 Query Key 工厂
 - [ ] 建立通用 Loading 组件
 - [ ] 建立通用 Empty 组件
 - [ ] 建立通用 Error 组件
@@ -459,14 +459,14 @@ apps/api/src/
 /books/:bookId
 ```
 
-- [ ] 展示词书封面、难度和单词总数
+- [x] 展示词书封面、难度和单词总数
 - [ ] 展示当前完成度
-- [ ] 展示词书单元列表
+- [x] 展示词书单元列表
 - [ ] 显示未开始、学习中、已完成状态
 - [ ] 显示每个单元的掌握单词数量
-- [ ] 点击单元进入学习页面
-- [ ] 处理词书为空的情况
-- [ ] 处理接口加载失败的情况
+- [x] 点击单元查看单元单词
+- [x] 处理词书为空的情况
+- [x] 处理接口加载失败的情况
 
 ## 十八、阶段 8：单词学习页面
 
