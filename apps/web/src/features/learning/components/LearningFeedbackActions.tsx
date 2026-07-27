@@ -18,13 +18,30 @@ export function LearningFeedbackActions({
         你对这个单词的熟悉程度如何？
       </Typography.Paragraph>
       <Space className="learning-actions" wrap>
-        <Button danger size="large" disabled={disabled} onClick={() => onFeedback('unknown')}>
+        <Button
+          autoInsertSpace={false}
+          danger
+          size="large"
+          disabled={disabled}
+          onClick={() => onFeedback('unknown')}
+        >
           不认识
         </Button>
-        <Button size="large" disabled={disabled} onClick={() => onFeedback('familiar')}>
+        <Button
+          autoInsertSpace={false}
+          size="large"
+          disabled={disabled}
+          onClick={() => onFeedback('familiar')}
+        >
           有印象
         </Button>
-        <Button type="primary" size="large" disabled={disabled} onClick={() => onFeedback('known')}>
+        <Button
+          autoInsertSpace={false}
+          type="primary"
+          size="large"
+          disabled={disabled}
+          onClick={() => onFeedback('known')}
+        >
           认识
         </Button>
       </Space>

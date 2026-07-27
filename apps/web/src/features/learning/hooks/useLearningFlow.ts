@@ -25,8 +25,14 @@ export function useLearningFlow(unitId?: string) {
     queryFn: () => api.getUnitWords(unitId ?? ''),
     enabled: Boolean(unitId),
   })
-  const createSessionMutation = useMutation({ mutationFn: api.createStudySession })
-  const feedbackMutation = useMutation({ mutationFn: api.submitProgressFeedback })
+  const createSessionMutation = useMutation({
+    mutationFn: (input: Parameters<typeof api.createStudySession>[0]) =>
+      api.createStudySession(input),
+  })
+  const feedbackMutation = useMutation({
+    mutationFn: (input: Parameters<typeof api.submitProgressFeedback>[0]) =>
+      api.submitProgressFeedback(input),
+  })
   const [queueIds, setQueueIds] = useState<string[] | null>(null)
   const [completedCount, setCompletedCount] = useState(0)
   const actionLock = useRef(false)
@@ -100,9 +106,7 @@ export function useLearningFlow(unitId?: string) {
 
             if (feedback === 'unknown') {
               setQueueIds(remainingIds)
-              window.setTimeout(() => {
-                actionLock.current = false
-              }, 250)
+              actionLock.current = false
               return
             }
 
@@ -114,9 +118,7 @@ export function useLearningFlow(unitId?: string) {
               return
             }
 
-            window.setTimeout(() => {
-              actionLock.current = false
-            }, 250)
+            actionLock.current = false
           },
           onError: () => {
             actionLock.current = false
