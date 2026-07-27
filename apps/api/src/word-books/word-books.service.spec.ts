@@ -11,6 +11,7 @@ describe('WordBooksService', () => {
     },
     unit: {
       findUnique: vi.fn(),
+      findFirst: vi.fn(),
     },
   } as unknown as PrismaService
 
@@ -25,10 +26,7 @@ describe('WordBooksService', () => {
         description: 'description',
         level: 'BEGINNER',
         coverColor: '#2563eb',
-        units: [
-          { _count: { words: 20 } },
-          { _count: { words: 20 } },
-        ],
+        units: [{ _count: { words: 20 } }, { _count: { words: 20 } }],
       },
     ] as never)
 
@@ -49,17 +47,13 @@ describe('WordBooksService', () => {
       description: null,
       level: 'BEGINNER',
       coverColor: '#2563eb',
-      units: [
-        { id: 'unit-1', name: '日常基础', order: 1, _count: { words: 20 } },
-      ],
+      units: [{ id: 'unit-1', name: '日常基础', order: 1, _count: { words: 20 } }],
     } as never)
 
     await expect(service.findOne('book-1')).resolves.toEqual(
       expect.objectContaining({
         id: 'book-1',
-        units: [
-          expect.objectContaining({ id: 'unit-1', wordCount: 20 }),
-        ],
+        units: [expect.objectContaining({ id: 'unit-1', wordCount: 20 })],
         wordCount: 20,
       }),
     )
@@ -100,5 +94,25 @@ describe('WordBooksService', () => {
         words: [expect.objectContaining({ spelling: 'hello' })],
       }),
     )
+  })
+
+  it('returns the next unit when one exists', async () => {
+    vi.mocked(prisma.unit.findUnique).mockResolvedValue({
+      id: 'unit-1',
+      wordBookId: 'book-1',
+      name: '日常基础',
+      order: 1,
+      _count: { words: 20 },
+    } as never)
+    vi.mocked(prisma.unit.findFirst).mockResolvedValue({ id: 'unit-2' } as never)
+
+    await expect(service.findUnit('unit-1')).resolves.toEqual({
+      id: 'unit-1',
+      wordBookId: 'book-1',
+      name: '日常基础',
+      order: 1,
+      wordCount: 20,
+      nextUnitId: 'unit-2',
+    })
   })
 })

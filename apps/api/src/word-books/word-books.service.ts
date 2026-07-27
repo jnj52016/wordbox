@@ -2,6 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common'
 import { PrismaService } from '../prisma/prisma.service'
 import {
   UnitSummaryDto,
+  UnitDetailDto,
   UnitWordsResponseDto,
   WordBookDetailDto,
   WordBookListItemDto,
@@ -52,17 +53,15 @@ function toUnitSummary(unit: UnitWithCount): UnitSummaryDto {
   }
 }
 
-function toWordBookListItem(
-  wordBook: {
-    id: string
-    slug: string
-    name: string
-    description: string | null
-    level: string | null
-    coverColor: string | null
-    units: Array<{ _count: { words: number } }>
-  },
-): WordBookListItemDto {
+function toWordBookListItem(wordBook: {
+  id: string
+  slug: string
+  name: string
+  description: string | null
+  level: string | null
+  coverColor: string | null
+  units: Array<{ _count: { words: number } }>
+}): WordBookListItemDto {
   return {
     id: wordBook.id,
     slug: wordBook.slug,
@@ -154,6 +153,39 @@ export class WordBooksService {
     }
 
     return wordBook.units.map(toUnitSummary)
+  }
+
+  async findUnit(id: string): Promise<UnitDetailDto> {
+    const unit = await this.prisma.unit.findUnique({
+      where: { id },
+      select: {
+        ...unitFields,
+        wordBookId: true,
+        _count: { select: { words: true } },
+      },
+    })
+
+    if (!unit) {
+      throw new NotFoundException('单元不存在')
+    }
+
+    const nextUnit = await this.prisma.unit.findFirst({
+      where: {
+        wordBookId: unit.wordBookId,
+        order: { gt: unit.order },
+      },
+      orderBy: { order: 'asc' },
+      select: { id: true },
+    })
+
+    return {
+      id: unit.id,
+      name: unit.name,
+      order: unit.order,
+      wordCount: unit._count.words,
+      wordBookId: unit.wordBookId,
+      nextUnitId: nextUnit?.id ?? null,
+    }
   }
 
   async findUnitWords(unitId: string): Promise<UnitWordsResponseDto> {

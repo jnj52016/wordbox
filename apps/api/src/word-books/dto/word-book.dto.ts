@@ -14,6 +14,14 @@ export class UnitSummaryDto {
   wordCount!: number
 }
 
+export class UnitDetailDto extends UnitSummaryDto {
+  @ApiProperty({ example: 'clxbook123' })
+  wordBookId!: string
+
+  @ApiPropertyOptional({ nullable: true, example: 'clxunit456' })
+  nextUnitId!: string | null
+}
+
 export class WordBookListItemDto {
   @ApiProperty({ example: 'clxbook123' })
   id!: string

@@ -11,6 +11,7 @@ import type {
   StudyQuestion,
   StudyResult,
   StudySession,
+  UnitDetail,
   UnitWordsResponse,
   WordBook,
   WordBookDetail,
@@ -20,6 +21,7 @@ import type {
 export const api = {
   listWordBooks: () => request<WordBook[]>('/word-books'),
   getWordBook: (id: string) => request<WordBookDetail>(`/word-books/${id}`),
+  getUnit: (id: string) => request<UnitDetail>(`/units/${id}`),
   getUnitWords: (id: string) => request<UnitWordsResponse>(`/units/${id}/words`),
   ensureLearner: (publicId: string) =>
     request<Learner>('/learners', {
@@ -54,8 +56,7 @@ export const api = {
     request<ReviewQueue>(`/review-queue?learnerId=${encodeURIComponent(learnerId)}`),
   getDashboard: (learnerId: string) =>
     request<Dashboard>(`/dashboard?learnerId=${encodeURIComponent(learnerId)}`),
-  getStudyQuestions: (id: string) =>
-    request<StudyQuestion[]>(`/study-sessions/${id}/questions`),
+  getStudyQuestions: (id: string) => request<StudyQuestion[]>(`/study-sessions/${id}/questions`),
   submitStudyAnswer: (
     id: string,
     answer: { questionId: string; questionType: QuestionType; answer: string },
@@ -96,6 +97,7 @@ export type {
   StudyQuestion,
   StudyResult,
   StudySession,
+  UnitDetail,
   UnitWordsResponse,
   WordBook,
   WordBookDetail,

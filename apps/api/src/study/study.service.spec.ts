@@ -91,11 +91,10 @@ describe('StudyService', () => {
   })
 
   it('creates a review session from due progress records', async () => {
-    vi.mocked(prisma.wordProgress.findMany).mockResolvedValue([
-      { word: words[1] },
-    ] as never)
+    vi.mocked(prisma.wordProgress.findMany).mockResolvedValue([{ word: words[1] }] as never)
     vi.mocked(prisma.studySession.create).mockResolvedValue({
       ...session,
+      mode: StudyMode.REVIEW,
       unitId: null,
       totalCount: 1,
     } as never)

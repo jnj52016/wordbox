@@ -16,6 +16,11 @@ export type UnitSummary = {
   wordCount: number
 }
 
+export type UnitDetail = UnitSummary & {
+  wordBookId: string
+  nextUnitId: string | null
+}
+
 export type WordBookDetail = WordBook & {
   units: UnitSummary[]
 }
