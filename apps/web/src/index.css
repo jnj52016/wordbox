@@ -73,6 +73,52 @@ body {
   width: min(100%, 640px);
 }
 
+.dashboard-shell {
+  max-width: 1080px;
+}
+
+.dashboard-hero {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+.dashboard-hero h1 {
+  margin: 8px 0;
+}
+
+.dashboard-hero p {
+  margin-bottom: 0;
+}
+
+.dashboard-onboarding {
+  margin-bottom: 24px;
+}
+
+.dashboard-stat-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.dashboard-goal-card,
+.dashboard-book-card {
+  margin-top: 24px;
+}
+
+.dashboard-book-heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.dashboard-book-heading h4 {
+  margin-top: 0;
+}
+
 .page-shell {
   width: min(100%, 1080px);
 }
@@ -398,6 +444,24 @@ body {
 
   .result-stat-grid {
     grid-template-columns: 1fr;
+  }
+
+  .dashboard-hero,
+  .dashboard-book-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .dashboard-hero .ant-space {
+    width: 100%;
+  }
+
+  .dashboard-hero .ant-btn {
+    flex: 1;
+  }
+
+  .dashboard-stat-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .result-answer-card .ant-list-item {

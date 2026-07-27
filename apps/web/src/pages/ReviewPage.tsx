@@ -31,10 +31,6 @@ export function ReviewPage() {
     },
   })
 
-  if (learnerQuery.isPending || queueQuery.isPending) {
-    return <Spin className="page-state" size="large" tip="正在加载复习内容…" />
-  }
-
   if (learnerQuery.isError || queueQuery.isError) {
     return (
       <Alert
@@ -50,6 +46,10 @@ export function ReviewPage() {
         }
       />
     )
+  }
+
+  if (learnerQuery.isPending || queueQuery.isPending) {
+    return <Spin className="page-state" size="large" tip="正在加载复习内容…" />
   }
 
   const queue = queueQuery.data

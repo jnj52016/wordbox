@@ -1,8 +1,9 @@
-import { Button, Card, Layout, Typography } from 'antd'
+import { Card, Layout, Typography } from 'antd'
 import { Link, Route, Routes } from 'react-router-dom'
 import { BookDetailPage } from './pages/BookDetailPage'
 import { BooksPage } from './pages/BooksPage'
 import { LearnPage } from './pages/LearnPage'
+import { HomePage } from './pages/HomePage'
 import { QuizPage } from './pages/QuizPage'
 import { ResultPage } from './pages/ResultPage'
 import { ReviewPage } from './pages/ReviewPage'
@@ -11,20 +12,6 @@ import { UnitWordsPage } from './pages/UnitWordsPage'
 import { useLearner } from './learner/useLearner'
 
 const { Content, Header } = Layout
-
-function HomePage() {
-  return (
-    <Card className="welcome-card">
-      <Typography.Title level={1}>WordBox</Typography.Title>
-      <Typography.Paragraph>
-        轻量、专注的单词学习工具。工程骨架已准备好，接下来将加入词书和学习流程。
-      </Typography.Paragraph>
-      <Button type="primary" size="large">
-        <Link to="/books">开始学习</Link>
-      </Button>
-    </Card>
-  )
-}
 
 function NotFoundPage() {
   return (

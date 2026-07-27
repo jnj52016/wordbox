@@ -133,6 +133,24 @@ export type ReviewQueue = {
   words: ReviewWord[]
 }
 
+export type DashboardWordBookProgress = {
+  id: string
+  name: string
+  totalWordCount: number
+  masteredWordCount: number
+  completionPercent: number
+}
+
+export type Dashboard = {
+  todayLearnedCount: number
+  dailyGoal: number
+  streakDays: number
+  masteredWordCount: number
+  reviewDueCount: number
+  hasLearningHistory: boolean
+  currentWordBook: DashboardWordBookProgress | null
+}
+
 async function request<T>(path: string, init?: RequestInit): Promise<T> {
   const headers = new Headers(init?.headers)
   if (init?.body) {
@@ -197,6 +215,8 @@ export const api = {
   getStudyResult: (id: string) => request<StudyResult>(`/study-sessions/${id}/result`),
   getReviewQueue: (learnerId: string) =>
     request<ReviewQueue>(`/review-queue?learnerId=${encodeURIComponent(learnerId)}`),
+  getDashboard: (learnerId: string) =>
+    request<Dashboard>(`/dashboard?learnerId=${encodeURIComponent(learnerId)}`),
   getStudyQuestions: (id: string) =>
     request<StudyQuestion[]>(`/study-sessions/${id}/questions`),
   submitStudyAnswer: (

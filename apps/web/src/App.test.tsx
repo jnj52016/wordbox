@@ -9,15 +9,29 @@ describe('App', () => {
   beforeEach(() => {
     vi.stubGlobal(
       'fetch',
-      vi.fn().mockResolvedValue({
-        ok: true,
-        json: async () => ({
-          publicId: 'test-learner',
-          dailyGoal: 10,
-          autoPronounce: true,
-          createdAt: '2026-01-01T00:00:00.000Z',
-          updatedAt: '2026-01-01T00:00:00.000Z',
-        }),
+      vi.fn().mockImplementation((input: string) => {
+        const isDashboardRequest = input.includes('/dashboard')
+        return Promise.resolve({
+          ok: true,
+          json: async () =>
+            isDashboardRequest
+              ? {
+                  todayLearnedCount: 0,
+                  dailyGoal: 10,
+                  streakDays: 0,
+                  masteredWordCount: 0,
+                  reviewDueCount: 0,
+                  hasLearningHistory: false,
+                  currentWordBook: null,
+                }
+              : {
+                  publicId: 'test-learner',
+                  dailyGoal: 10,
+                  autoPronounce: true,
+                  createdAt: '2026-01-01T00:00:00.000Z',
+                  updatedAt: '2026-01-01T00:00:00.000Z',
+                },
+        })
       }),
     )
   })
@@ -26,7 +40,7 @@ describe('App', () => {
     vi.unstubAllGlobals()
   })
 
-  it('renders the WordBox welcome page', () => {
+  it('renders the WordBox dashboard', async () => {
     const queryClient = new QueryClient()
 
     render(
@@ -39,7 +53,7 @@ describe('App', () => {
       </QueryClientProvider>,
     )
 
-    expect(screen.getByRole('heading', { name: 'WordBox' })).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: '开始学习' })).toBeInTheDocument()
+    expect(await screen.findByRole('heading', { name: '今天也来学几个单词' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: '开始今日学习' })).toBeInTheDocument()
   })
 })

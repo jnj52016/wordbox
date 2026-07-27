@@ -4,6 +4,7 @@ import { HealthController } from './health.controller'
 import { LearnersModule } from './learners/learners.module'
 import { PrismaModule } from './prisma/prisma.module'
 import { ReviewModule } from './review/review.module'
+import { StatisticsModule } from './statistics/statistics.module'
 import { StudyModule } from './study/study.module'
 import { WordBooksModule } from './word-books/word-books.module'
 
@@ -18,6 +19,7 @@ import { WordBooksModule } from './word-books/word-books.module'
     LearnersModule,
     WordBooksModule,
     ReviewModule,
+    StatisticsModule,
     StudyModule,
   ],
   controllers: [HealthController],
