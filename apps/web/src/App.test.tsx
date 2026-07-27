@@ -55,5 +55,7 @@ describe('App', () => {
 
     expect(await screen.findByRole('heading', { name: '今天也来学几个单词' })).toBeInTheDocument()
     expect(screen.getByRole('button', { name: '开始今日学习' })).toBeInTheDocument()
+    expect(screen.getAllByRole('link', { name: '首页' })).toHaveLength(2)
+    expect(screen.getAllByRole('link', { name: '复习' })).toHaveLength(2)
   })
 })

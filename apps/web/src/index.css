@@ -28,6 +28,42 @@ body {
   background: #f8fafc;
 }
 
+.desktop-sidebar {
+  border-right: 1px solid #e5e7eb;
+}
+
+.desktop-sidebar .ant-layout-sider-children {
+  display: flex;
+  flex-direction: column;
+  padding: 24px 16px;
+}
+
+.sidebar-brand {
+  padding: 0 12px 28px;
+}
+
+.desktop-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.nav-link {
+  display: block;
+  padding: 11px 12px;
+  color: #526078;
+  border-radius: 10px;
+  transition:
+    color 0.2s,
+    background 0.2s;
+}
+
+.nav-link:hover,
+.nav-link-active {
+  color: #2563eb;
+  background: #eff6ff;
+}
+
 .app-header {
   display: flex;
   align-items: center;
@@ -56,6 +92,14 @@ body {
   color: #2563eb;
 }
 
+.mobile-brand {
+  display: none;
+}
+
+.mobile-nav {
+  display: none;
+}
+
 .learner-status {
   margin-left: auto;
   color: #94a3b8;
@@ -66,6 +110,7 @@ body {
   display: flex;
   justify-content: center;
   width: 100%;
+  min-width: 0;
   padding: 48px 24px;
 }
 
@@ -396,12 +441,17 @@ body {
 }
 
 @media (max-width: 480px) {
+  .desktop-sidebar {
+    display: none;
+  }
+
   .app-header {
+    height: 56px;
     padding: 0 16px;
   }
 
-  .app-nav {
-    margin-left: 24px;
+  .mobile-brand {
+    display: inline;
   }
 
   .learner-status {
@@ -409,7 +459,28 @@ body {
   }
 
   .app-content {
-    padding: 24px 16px;
+    padding: 24px 16px calc(88px + env(safe-area-inset-bottom));
+  }
+
+  .mobile-nav {
+    position: fixed;
+    z-index: 10;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 4px;
+    padding: 8px 8px calc(8px + env(safe-area-inset-bottom));
+    background: rgb(255 255 255 / 96%);
+    border-top: 1px solid #e5e7eb;
+    box-shadow: 0 -4px 16px rgb(15 23 42 / 6%);
+  }
+
+  .mobile-nav .nav-link {
+    padding: 8px 4px;
+    font-size: 12px;
+    text-align: center;
   }
 
   .book-cover-small {
