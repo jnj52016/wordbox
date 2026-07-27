@@ -124,6 +124,7 @@ model AnswerRecord {
   session         StudySession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
   word            Word          @relation(fields: [wordId], references: [id], onDelete: Cascade)
 
+  @@unique([sessionId, wordId])
   @@index([sessionId])
   @@index([wordId])
 }
