@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config'
 import { HealthController } from './health.controller'
+import { LearnersModule } from './learners/learners.module'
 import { PrismaModule } from './prisma/prisma.module'
 import { WordBooksModule } from './word-books/word-books.module'
 
@@ -12,6 +13,7 @@ import { WordBooksModule } from './word-books/word-books.module'
       envFilePath: ['.env', '../../.env'],
     }),
     PrismaModule,
+    LearnersModule,
     WordBooksModule,
   ],
   controllers: [HealthController],

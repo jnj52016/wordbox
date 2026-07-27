@@ -10,8 +10,8 @@ WordBox 是一个移动端适配的轻量背单词网站，核心流程为：
 
 ## 二、MVP 范围
 
-- [ ] 每个浏览器首次访问时生成匿名 `learnerId`，保存到 `localStorage`
-- [ ] 首版提供 1 本词书、5 个单元、约 100 个单词
+- [x] 每个浏览器首次访问时生成匿名 `learnerId`，保存到 `localStorage`
+- [x] 首版提供 1 本词书、5 个单元、约 100 个单词
 - [ ] 每个单元约 20 个单词，每轮默认学习 10 个
 - [ ] 支持“看英文选中文”“看中文选英文”“英文拼写”三种题型
 - [ ] 发音优先使用浏览器 `speechSynthesis`
@@ -299,10 +299,10 @@ apps/api/src/
 
 ### 匿名学习者
 
-- [ ] `POST /api/v1/learners`
-- [ ] `GET /api/v1/learners/:publicId`
-- [ ] `PATCH /api/v1/learners/:publicId/settings`
-- [ ] `DELETE /api/v1/learners/:publicId/progress`
+- [x] `POST /api/v1/learners`
+- [x] `GET /api/v1/learners/:publicId`
+- [x] `PATCH /api/v1/learners/:publicId/settings`
+- [x] `DELETE /api/v1/learners/:publicId/progress`
 
 ### 词书和单元
 
@@ -601,10 +601,10 @@ apps/api/src/
 
 ### 设置
 
-- [ ] 修改每日学习目标
-- [ ] 开启或关闭自动发音
-- [ ] 展示匿名学习者 ID
-- [ ] 重置学习进度前弹出二次确认
+- [x] 修改每日学习目标
+- [x] 开启或关闭自动发音
+- [x] 展示匿名学习者 ID
+- [x] 重置学习进度前弹出二次确认
 - [ ] 重置后刷新全部相关缓存
 
 ## 二十四、Vitest 测试
@@ -624,7 +624,7 @@ apps/api/src/
 
 ### 前端测试
 
-- [ ] 匿名身份初始化测试
+- [x] 匿名身份初始化测试
 - [ ] 单词卡片交互测试
 - [ ] 选择题交互测试
 - [ ] 拼写题交互测试

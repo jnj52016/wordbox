@@ -41,8 +41,29 @@ export type UnitWordsResponse = {
   total: number
 }
 
-async function request<T>(path: string): Promise<T> {
-  const response = await fetch(`${API_BASE_URL}${path}`)
+export type Learner = {
+  publicId: string
+  dailyGoal: number
+  autoPronounce: boolean
+  createdAt: string
+  updatedAt: string
+}
+
+export type ResetProgressResponse = {
+  deletedProgressCount: number
+  deletedSessionCount: number
+}
+
+async function request<T>(path: string, init?: RequestInit): Promise<T> {
+  const headers = new Headers(init?.headers)
+  if (init?.body) {
+    headers.set('Content-Type', 'application/json')
+  }
+
+  const response = await fetch(`${API_BASE_URL}${path}`, {
+    ...init,
+    headers,
+  })
 
   if (!response.ok) {
     let message = `请求失败（${response.status}）`
@@ -66,4 +87,21 @@ export const api = {
   listWordBooks: () => request<WordBook[]>('/word-books'),
   getWordBook: (id: string) => request<WordBookDetail>(`/word-books/${id}`),
   getUnitWords: (id: string) => request<UnitWordsResponse>(`/units/${id}/words`),
+  ensureLearner: (publicId: string) =>
+    request<Learner>('/learners', {
+      method: 'POST',
+      body: JSON.stringify({ publicId }),
+    }),
+  updateLearnerSettings: (
+    publicId: string,
+    settings: { dailyGoal?: number; autoPronounce?: boolean },
+  ) =>
+    request<Learner>(`/learners/${publicId}/settings`, {
+      method: 'PATCH',
+      body: JSON.stringify(settings),
+    }),
+  resetLearnerProgress: (publicId: string) =>
+    request<ResetProgressResponse>(`/learners/${publicId}/progress`, {
+      method: 'DELETE',
+    }),
 }

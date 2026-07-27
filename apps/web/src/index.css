@@ -56,6 +56,12 @@ body {
   color: #2563eb;
 }
 
+.learner-status {
+  margin-left: auto;
+  color: #94a3b8;
+  font-size: 12px;
+}
+
 .app-content {
   display: flex;
   justify-content: center;
@@ -193,6 +199,19 @@ body {
   margin-top: 4px;
 }
 
+.settings-card {
+  max-width: 640px;
+  margin-bottom: 20px;
+}
+
+.settings-card .ant-input-number {
+  width: 180px;
+}
+
+.danger-card {
+  border-color: #fecaca;
+}
+
 @media (max-width: 480px) {
   .app-header {
     padding: 0 16px;
@@ -200,6 +219,10 @@ body {
 
   .app-nav {
     margin-left: 24px;
+  }
+
+  .learner-status {
+    display: none;
   }
 
   .app-content {
