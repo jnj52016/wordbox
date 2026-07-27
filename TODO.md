@@ -111,19 +111,19 @@ pnpm db:seed
 
 ## 六、阶段 2：配置 PostgreSQL 和 Prisma
 
-- [ ] 编写开发环境 `docker-compose.yml`
-- [ ] 使用 Docker 启动 PostgreSQL
-- [ ] 在 NestJS 项目中安装 Prisma
-- [ ] 初始化 Prisma
-- [ ] 配置 `DATABASE_URL`
-- [ ] 创建 `PrismaModule`
-- [ ] 创建 `PrismaService`
-- [ ] 设计 Prisma Schema
-- [ ] 生成第一次 migration
-- [ ] 检查 Prisma 生成的 SQL
-- [ ] 将 migration 提交到 Git
-- [ ] 编写数据库 seed 脚本
-- [ ] 验证 seed 可以重复执行且不会生成重复数据
+- [x] 编写开发环境 `docker-compose.yml`
+- [x] 使用 Docker 启动 PostgreSQL
+- [x] 在 NestJS 项目中安装 Prisma
+- [x] 初始化 Prisma
+- [x] 配置 `DATABASE_URL`
+- [x] 创建 `PrismaModule`
+- [x] 创建 `PrismaService`
+- [x] 设计 Prisma Schema
+- [x] 生成第一次 migration
+- [x] 检查 Prisma 生成的 SQL
+- [x] 将 migration 提交到 Git
+- [x] 编写数据库 seed 脚本
+- [x] 验证 seed 可以重复执行且不会生成重复数据
 
 ## 七、数据库设计
 

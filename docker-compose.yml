@@ -1,0 +1,21 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: wordbox-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: wordbox
+      POSTGRES_USER: wordbox
+      POSTGRES_PASSWORD: wordbox
+    ports:
+      - '5432:5432'
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U wordbox -d wordbox']
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  postgres_data:

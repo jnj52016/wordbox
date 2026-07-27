@@ -39,6 +39,17 @@ npm run build
 
 Swagger UI：http://localhost:3000/api/docs
 
+## 数据库命令
+
+```bash
+docker compose up -d
+pnpm db:generate
+pnpm db:migrate
+pnpm db:seed
+```
+
+本地 PostgreSQL 默认连接地址由 `.env` 配置；停止数据库容器可以运行 `docker compose down`。
+
 ## 当前状态
 
-阶段 1 已创建前后端基础工程骨架。数据库、词书数据和学习闭环将在后续阶段实现，详见 [TODO.md](./TODO.md)。
+阶段 1 已完成基础工程和代码质量配置，阶段 2 已完成 PostgreSQL、Prisma Schema、首次 migration 和可重复 seed。词书数据和学习闭环将在后续阶段实现，详见 [TODO.md](./TODO.md)。

@@ -1,0 +1,129 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum WordStatus {
+  NEW
+  LEARNING
+  MASTERED
+}
+
+enum StudyMode {
+  LEARN
+  REVIEW
+}
+
+enum QuestionType {
+  EN_TO_ZH
+  ZH_TO_EN
+  SPELLING
+}
+
+model Learner {
+  id            String         @id @default(cuid())
+  publicId      String         @unique @db.VarChar(64)
+  dailyGoal     Int            @default(10)
+  autoPronounce Boolean        @default(true)
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  progresses    WordProgress[]
+  sessions      StudySession[]
+}
+
+model WordBook {
+  id          String   @id @default(cuid())
+  slug        String   @unique @db.VarChar(128)
+  name        String   @db.VarChar(128)
+  description String?  @db.Text
+  level       String?  @db.VarChar(64)
+  coverColor  String?  @db.VarChar(32)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  units       Unit[]
+}
+
+model Unit {
+  id         String         @id @default(cuid())
+  wordBookId String
+  name       String         @db.VarChar(128)
+  order      Int
+  wordBook   WordBook       @relation(fields: [wordBookId], references: [id], onDelete: Cascade)
+  words      Word[]
+  sessions   StudySession[]
+
+  @@unique([wordBookId, order])
+}
+
+model Word {
+  id           String         @id @default(cuid())
+  unitId       String
+  spelling     String         @db.VarChar(128)
+  phonetic     String?        @db.VarChar(128)
+  meaning      String         @db.Text
+  partOfSpeech String?        @db.VarChar(64)
+  example      String?        @db.Text
+  exampleZh    String?        @db.Text
+  imageUrl     String?        @db.Text
+  emoji        String?        @db.VarChar(32)
+  order        Int
+  unit         Unit           @relation(fields: [unitId], references: [id], onDelete: Cascade)
+  progresses   WordProgress[]
+  answers      AnswerRecord[]
+
+  @@unique([unitId, order])
+  @@index([spelling])
+}
+
+model WordProgress {
+  id            String     @id @default(cuid())
+  learnerId     String
+  wordId        String
+  status        WordStatus @default(NEW)
+  correctStreak Int        @default(0)
+  correctCount  Int        @default(0)
+  wrongCount    Int        @default(0)
+  lastSeenAt    DateTime?
+  nextReviewAt  DateTime?
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+  learner       Learner    @relation(fields: [learnerId], references: [id], onDelete: Cascade)
+  word          Word       @relation(fields: [wordId], references: [id], onDelete: Cascade)
+
+  @@unique([learnerId, wordId])
+  @@index([nextReviewAt])
+  @@index([learnerId, nextReviewAt])
+}
+
+model StudySession {
+  id           String         @id @default(cuid())
+  learnerId    String
+  unitId       String?
+  mode         StudyMode
+  totalCount   Int
+  correctCount Int            @default(0)
+  startedAt    DateTime       @default(now())
+  completedAt  DateTime?
+  learner      Learner        @relation(fields: [learnerId], references: [id], onDelete: Cascade)
+  unit         Unit?          @relation(fields: [unitId], references: [id], onDelete: SetNull)
+  answers      AnswerRecord[]
+}
+
+model AnswerRecord {
+  id              String       @id @default(cuid())
+  sessionId       String
+  wordId          String
+  questionType    QuestionType
+  submittedAnswer String?      @db.Text
+  isCorrect       Boolean
+  createdAt       DateTime     @default(now())
+  session         StudySession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  word            Word          @relation(fields: [wordId], references: [id], onDelete: Cascade)
+
+  @@index([sessionId])
+  @@index([wordId])
+}
