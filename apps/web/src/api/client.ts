@@ -54,6 +54,50 @@ export type ResetProgressResponse = {
   deletedSessionCount: number
 }
 
+export type StudyMode = 'LEARN' | 'REVIEW'
+
+export type QuestionType = 'EN_TO_ZH' | 'ZH_TO_EN' | 'SPELLING'
+
+export type StudySession = {
+  id: string
+  learnerId: string
+  unitId: string
+  mode: StudyMode
+  totalCount: number
+  answeredCount: number
+  correctCount: number
+  startedAt: string
+  completedAt: string | null
+}
+
+export type StudyQuestion = {
+  questionId: string
+  wordId: string
+  questionType: QuestionType
+  prompt: string
+  phonetic: string | null
+  emoji: string | null
+  spelling?: string
+  options: string[]
+}
+
+export type WordProgress = {
+  status: 'NEW' | 'LEARNING' | 'MASTERED'
+  correctStreak: number
+  correctCount: number
+  wrongCount: number
+  nextReviewAt: string | null
+}
+
+export type StudyAnswerResult = {
+  questionId: string
+  questionType: QuestionType
+  isCorrect: boolean
+  correctAnswer: string
+  duplicate: boolean
+  progress: WordProgress
+}
+
 async function request<T>(path: string, init?: RequestInit): Promise<T> {
   const headers = new Headers(init?.headers)
   if (init?.body) {
@@ -103,5 +147,30 @@ export const api = {
   resetLearnerProgress: (publicId: string) =>
     request<ResetProgressResponse>(`/learners/${publicId}/progress`, {
       method: 'DELETE',
+    }),
+  createStudySession: (input: {
+    learnerId: string
+    unitId: string
+    mode?: StudyMode
+    count?: number
+  }) =>
+    request<StudySession>('/study-sessions', {
+      method: 'POST',
+      body: JSON.stringify(input),
+    }),
+  getStudySession: (id: string) => request<StudySession>(`/study-sessions/${id}`),
+  getStudyQuestions: (id: string) =>
+    request<StudyQuestion[]>(`/study-sessions/${id}/questions`),
+  submitStudyAnswer: (
+    id: string,
+    answer: { questionId: string; questionType: QuestionType; answer: string },
+  ) =>
+    request<StudyAnswerResult>(`/study-sessions/${id}/answers`, {
+      method: 'POST',
+      body: JSON.stringify(answer),
+    }),
+  completeStudySession: (id: string) =>
+    request<StudySession>(`/study-sessions/${id}/complete`, {
+      method: 'POST',
     }),
 }

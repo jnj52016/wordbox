@@ -79,6 +79,9 @@ export function BookDetailPage() {
           renderItem={(unit) => (
             <List.Item
               actions={[
+                <Button key="learn" type="primary">
+                  <Link to={`/learn/${unit.id}`}>开始学习</Link>
+                </Button>,
                 <Button key="view" type="link">
                   <Link to={`/units/${unit.id}/words`}>查看单词</Link>
                 </Button>,

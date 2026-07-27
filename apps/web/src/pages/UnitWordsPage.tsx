@@ -1,4 +1,4 @@
-import { Alert, Breadcrumb, Button, Card, Empty, List, Spin, Tag, Typography } from 'antd'
+import { Alert, Breadcrumb, Button, Card, Empty, List, Space, Spin, Tag, Typography } from 'antd'
 import { Link, useParams } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
 import { api } from '../api/client'
@@ -47,9 +47,14 @@ export function UnitWordsPage() {
           <Typography.Title level={2}>{result.unit.name}</Typography.Title>
           <Typography.Text type="secondary">共 {result.total} 个单词</Typography.Text>
         </div>
-        <Button>
-          <Link to="/books">返回词书</Link>
-        </Button>
+        <Space>
+          <Button type="primary">
+            <Link to={`/learn/${unitId}`}>开始学习</Link>
+          </Button>
+          <Button>
+            <Link to="/books">返回词书</Link>
+          </Button>
+        </Space>
       </div>
 
       {result.words.length === 0 ? (

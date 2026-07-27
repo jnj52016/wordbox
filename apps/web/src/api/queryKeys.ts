@@ -3,4 +3,6 @@ export const queryKeys = {
   wordBooks: ['word-books'] as const,
   wordBook: (id: string) => ['word-books', id] as const,
   unitWords: (id: string) => ['units', id, 'words'] as const,
+  studySession: (id: string) => ['study-sessions', id] as const,
+  studyQuestions: (id: string) => ['study-sessions', id, 'questions'] as const,
 }

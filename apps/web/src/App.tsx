@@ -2,6 +2,7 @@ import { Button, Card, Layout, Typography } from 'antd'
 import { Link, Route, Routes } from 'react-router-dom'
 import { BookDetailPage } from './pages/BookDetailPage'
 import { BooksPage } from './pages/BooksPage'
+import { LearnPage } from './pages/LearnPage'
 import { SettingsPage } from './pages/SettingsPage'
 import { UnitWordsPage } from './pages/UnitWordsPage'
 import { useLearner } from './learner/useLearner'
@@ -55,6 +56,7 @@ export default function App() {
           <Route path="/books" element={<BooksPage />} />
           <Route path="/books/:bookId" element={<BookDetailPage />} />
           <Route path="/units/:unitId/words" element={<UnitWordsPage />} />
+          <Route path="/learn/:unitId" element={<LearnPage />} />
           <Route path="/settings" element={<SettingsPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
