@@ -55,8 +55,9 @@ describe('StudyService', () => {
     unit: { findUnique: vi.fn() },
     word: { findMany: vi.fn(), findUnique: vi.fn() },
     answerRecord: { findMany: vi.fn() },
-    wordProgress: { upsert: vi.fn() },
+    wordProgress: { findMany: vi.fn(), upsert: vi.fn() },
     studySession: { create: vi.fn(), findUnique: vi.fn(), update: vi.fn() },
+    studySessionWord: { findMany: vi.fn(), createMany: vi.fn() },
     $transaction: vi.fn(async (callback: (tx: typeof transaction) => Promise<unknown>) =>
       callback(transaction),
     ),
@@ -69,8 +70,11 @@ describe('StudyService', () => {
     vi.mocked(prisma.unit.findUnique).mockResolvedValue({ id: 'unit-1' } as never)
     vi.mocked(prisma.word.findMany).mockResolvedValue(words as never)
     vi.mocked(prisma.word.findUnique).mockResolvedValue({ id: 'word-1' } as never)
+    vi.mocked(prisma.wordProgress.findMany).mockResolvedValue([] as never)
     vi.mocked(prisma.studySession.create).mockResolvedValue(session as never)
     vi.mocked(prisma.studySession.findUnique).mockResolvedValue(session as never)
+    vi.mocked(prisma.studySessionWord.findMany).mockResolvedValue([] as never)
+    vi.mocked(prisma.studySessionWord.createMany).mockResolvedValue({ count: 3 } as never)
   })
 
   it('creates a session with at most the requested number of ordered words', async () => {
@@ -84,6 +88,26 @@ describe('StudyService', () => {
     expect(prisma.word.findMany).toHaveBeenCalledWith(
       expect.objectContaining({ take: 3, orderBy: { order: 'asc' } }),
     )
+  })
+
+  it('creates a review session from due progress records', async () => {
+    vi.mocked(prisma.wordProgress.findMany).mockResolvedValue([
+      { word: words[1] },
+    ] as never)
+    vi.mocked(prisma.studySession.create).mockResolvedValue({
+      ...session,
+      unitId: null,
+      totalCount: 1,
+    } as never)
+
+    await expect(
+      service.createSession({ learnerId: 'learner-1', mode: StudyMode.REVIEW, count: 1 }),
+    ).resolves.toMatchObject({ mode: StudyMode.REVIEW, unitId: null, totalCount: 1 })
+
+    expect(prisma.wordProgress.findMany).toHaveBeenCalledOnce()
+    expect(prisma.studySessionWord.createMany).toHaveBeenCalledWith({
+      data: [{ sessionId: 'session-1', wordId: 'word-2', order: 0 }],
+    })
   })
 
   it('generates all three question types without exposing the standard answer', async () => {

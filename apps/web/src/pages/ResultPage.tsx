@@ -51,8 +51,21 @@ export function ResultPage() {
           </Typography.Text>
         </div>
         <Space wrap>
+          {result.wrongCount > 0 && (
+            <Button>
+              <Link to="/review">复习错词</Link>
+            </Button>
+          )}
           <Button type="primary">
-            <Link to={`/learn/${result.session.unitId}`}>继续学习</Link>
+            <Link
+              to={
+                result.session.mode === 'REVIEW'
+                  ? '/review'
+                  : `/learn/${result.session.unitId}`
+              }
+            >
+              {result.session.mode === 'REVIEW' ? '继续复习' : '继续学习'}
+            </Link>
           </Button>
           <Button>
             <Link to="/">返回首页</Link>

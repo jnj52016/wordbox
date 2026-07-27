@@ -19,11 +19,11 @@ export class CreateStudySessionDto {
   @MaxLength(64)
   learnerId!: string
 
-  @ApiProperty({ example: 'clxunit123' })
+  @ApiPropertyOptional({ example: 'clxunit123' })
+  @IsOptional()
   @IsString()
-  @IsNotEmpty()
   @MaxLength(64)
-  unitId!: string
+  unitId?: string
 
   @ApiPropertyOptional({ enum: StudyMode, default: StudyMode.LEARN })
   @IsOptional()
@@ -81,6 +81,20 @@ export class SubmitProgressFeedbackDto {
   feedback!: ProgressFeedback
 }
 
+export class MarkProgressMasteredDto {
+  @ApiProperty({ example: '8b6b9f4d-2f9d-4b50-9c6c-3c0a3d7c7b2a' })
+  @IsString()
+  @IsNotEmpty()
+  @MaxLength(64)
+  learnerId!: string
+
+  @ApiProperty({ example: 'clxword123' })
+  @IsString()
+  @IsNotEmpty()
+  @MaxLength(64)
+  wordId!: string
+}
+
 export class StudySessionDto {
   @ApiProperty({ example: 'clxsession123' })
   id!: string
@@ -88,8 +102,8 @@ export class StudySessionDto {
   @ApiProperty({ example: '8b6b9f4d-2f9d-4b50-9c6c-3c0a3d7c7b2a' })
   learnerId!: string
 
-  @ApiProperty({ example: 'clxunit123' })
-  unitId!: string
+  @ApiPropertyOptional({ nullable: true, example: 'clxunit123' })
+  unitId!: string | null
 
   @ApiProperty({ enum: StudyMode })
   mode!: StudyMode

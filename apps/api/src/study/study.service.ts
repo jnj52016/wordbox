@@ -8,6 +8,7 @@ import { QuestionType, StudyMode, WordStatus } from '@prisma/client'
 import { PrismaService } from '../prisma/prisma.service'
 import {
   CreateStudySessionDto,
+  MarkProgressMasteredDto,
   StudyAnswerResultDto,
   StudyQuestionDto,
   StudyResultDto,
@@ -102,10 +103,6 @@ function toSessionDto(session: {
   learner: { publicId: string }
   _count: { answers: number }
 }): StudySessionDto {
-  if (!session.unitId) {
-    throw new BadRequestException('学习 Session 缺少单元')
-  }
-
   return {
     id: session.id,
     learnerId: session.learner.publicId,
@@ -131,8 +128,8 @@ export class StudyService {
 
   async createSession(dto: CreateStudySessionDto): Promise<StudySessionDto> {
     const mode = dto.mode ?? StudyMode.LEARN
-    if (mode !== StudyMode.LEARN) {
-      throw new BadRequestException('当前仅支持学习模式')
+    if (mode === StudyMode.LEARN && !dto.unitId) {
+      throw new BadRequestException('学习模式必须提供单元')
     }
 
     const learner = await this.prisma.learner.findUnique({
@@ -144,28 +141,43 @@ export class StudyService {
       throw new NotFoundException('学习者不存在')
     }
 
-    const unit = await this.prisma.unit.findUnique({
-      where: { id: dto.unitId },
-      select: { id: true },
-    })
+    if (dto.unitId) {
+      const unit = await this.prisma.unit.findUnique({
+        where: { id: dto.unitId },
+        select: { id: true },
+      })
 
-    if (!unit) {
-      throw new NotFoundException('单元不存在')
+      if (!unit) {
+        throw new NotFoundException('单元不存在')
+      }
     }
 
-    const words = await this.findSessionWords(dto.unitId, dto.count ?? 10)
+    const words =
+      mode === StudyMode.REVIEW
+        ? await this.findReviewWords(learner.id, dto.count ?? 10)
+        : await this.findSessionWords(dto.unitId!, dto.count ?? 10)
     if (words.length === 0) {
-      throw new BadRequestException('该单元暂无可学习的单词')
+      throw new BadRequestException(
+        mode === StudyMode.REVIEW ? '当前没有待复习的单词' : '该单元暂无可学习的单词',
+      )
     }
 
     const session = await this.prisma.studySession.create({
       data: {
         learnerId: learner.id,
-        unitId: dto.unitId,
+        unitId: dto.unitId ?? null,
         mode,
         totalCount: words.length,
       },
       select: studySessionFields,
+    })
+
+    await this.prisma.studySessionWord.createMany({
+      data: words.map((word, index) => ({
+        sessionId: session.id,
+        wordId: word.id,
+        order: index,
+      })),
     })
 
     return toSessionDto(session)
@@ -240,7 +252,11 @@ export class StudyService {
 
   async getQuestions(id: string): Promise<StudyQuestionDto[]> {
     const session = await this.findSession(id)
-    const words = await this.findSessionWords(session.unitId ?? '', session.totalCount)
+    const words = await this.findSessionWordsForSession(
+      session.id,
+      session.unitId,
+      session.totalCount,
+    )
 
     return words.map((word, index) => this.toQuestion(session.id, word, index, words))
   }
@@ -403,6 +419,50 @@ export class StudyService {
     return toProgressDto(progress)
   }
 
+  async markProgressMastered(dto: MarkProgressMasteredDto): Promise<WordProgressDto> {
+    const learner = await this.prisma.learner.findUnique({
+      where: { publicId: dto.learnerId },
+      select: { id: true },
+    })
+    if (!learner) {
+      throw new NotFoundException('学习者不存在')
+    }
+
+    const word = await this.prisma.word.findUnique({
+      where: { id: dto.wordId },
+      select: { id: true },
+    })
+    if (!word) {
+      throw new NotFoundException('单词不存在')
+    }
+
+    const progress = await this.prisma.wordProgress.upsert({
+      where: {
+        learnerId_wordId: {
+          learnerId: learner.id,
+          wordId: dto.wordId,
+        },
+      },
+      create: {
+        learnerId: learner.id,
+        wordId: dto.wordId,
+        status: WordStatus.MASTERED,
+        correctStreak: 0,
+        correctCount: 0,
+        wrongCount: 0,
+        lastSeenAt: new Date(),
+        nextReviewAt: null,
+      },
+      update: {
+        status: WordStatus.MASTERED,
+        lastSeenAt: new Date(),
+        nextReviewAt: null,
+      },
+    })
+
+    return toProgressDto(progress)
+  }
+
   async completeSession(id: string): Promise<StudySessionDto> {
     const session = await this.findSession(id)
 
@@ -449,6 +509,42 @@ export class StudyService {
     })
   }
 
+  private async findReviewWords(learnerId: string, count: number): Promise<StudyWord[]> {
+    const progresses = await this.prisma.wordProgress.findMany({
+      where: {
+        learnerId,
+        nextReviewAt: { lte: new Date() },
+      },
+      orderBy: [{ nextReviewAt: 'asc' }, { wrongCount: 'desc' }],
+      take: count,
+      select: { word: { select: studyWordFields } },
+    })
+
+    return progresses.map((progress) => progress.word)
+  }
+
+  private async findSessionWordsForSession(
+    sessionId: string,
+    unitId: string | null,
+    count: number,
+  ): Promise<StudyWord[]> {
+    const sessionWords = await this.prisma.studySessionWord.findMany({
+      where: { sessionId },
+      orderBy: { order: 'asc' },
+      select: { word: { select: studyWordFields } },
+    })
+
+    if (sessionWords.length > 0) {
+      return sessionWords.map((sessionWord) => sessionWord.word)
+    }
+
+    if (!unitId) {
+      throw new BadRequestException('学习 Session 缺少单词')
+    }
+
+    return this.findSessionWords(unitId, count)
+  }
+
   private async findQuestion(
     session: Awaited<ReturnType<StudyService['findSession']>>,
     questionId: string,
@@ -459,7 +555,11 @@ export class StudyService {
     }
 
     const wordId = questionId.slice(prefix.length)
-    const words = await this.findSessionWords(session.unitId ?? '', session.totalCount)
+    const words = await this.findSessionWordsForSession(
+      session.id,
+      session.unitId,
+      session.totalCount,
+    )
     const wordIndex = words.findIndex((word) => word.id === wordId)
 
     if (wordIndex < 0) {

@@ -6,4 +6,5 @@ export const queryKeys = {
   studySession: (id: string) => ['study-sessions', id] as const,
   studyResult: (id: string) => ['study-sessions', id, 'result'] as const,
   studyQuestions: (id: string) => ['study-sessions', id, 'questions'] as const,
+  reviewQueue: (publicId: string) => ['review-queue', publicId] as const,
 }

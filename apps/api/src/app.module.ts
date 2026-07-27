@@ -3,6 +3,7 @@ import { ConfigModule } from '@nestjs/config'
 import { HealthController } from './health.controller'
 import { LearnersModule } from './learners/learners.module'
 import { PrismaModule } from './prisma/prisma.module'
+import { ReviewModule } from './review/review.module'
 import { StudyModule } from './study/study.module'
 import { WordBooksModule } from './word-books/word-books.module'
 
@@ -16,6 +17,7 @@ import { WordBooksModule } from './word-books/word-books.module'
     PrismaModule,
     LearnersModule,
     WordBooksModule,
+    ReviewModule,
     StudyModule,
   ],
   controllers: [HealthController],

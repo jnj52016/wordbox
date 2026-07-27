@@ -63,7 +63,7 @@ export type ProgressFeedback = 'UNKNOWN' | 'FAMILIAR' | 'KNOWN'
 export type StudySession = {
   id: string
   learnerId: string
-  unitId: string
+  unitId: string | null
   mode: StudyMode
   totalCount: number
   answeredCount: number
@@ -120,6 +120,19 @@ export type StudyResult = {
   answers: StudyResultAnswer[]
 }
 
+export type ReviewWord = Word & {
+  status: 'NEW' | 'LEARNING' | 'MASTERED'
+  correctCount: number
+  wrongCount: number
+  lastSeenAt: string | null
+  nextReviewAt: string
+}
+
+export type ReviewQueue = {
+  total: number
+  words: ReviewWord[]
+}
+
 async function request<T>(path: string, init?: RequestInit): Promise<T> {
   const headers = new Headers(init?.headers)
   if (init?.body) {
@@ -172,7 +185,7 @@ export const api = {
     }),
   createStudySession: (input: {
     learnerId: string
-    unitId: string
+    unitId?: string
     mode?: StudyMode
     count?: number
   }) =>
@@ -182,6 +195,8 @@ export const api = {
     }),
   getStudySession: (id: string) => request<StudySession>(`/study-sessions/${id}`),
   getStudyResult: (id: string) => request<StudyResult>(`/study-sessions/${id}/result`),
+  getReviewQueue: (learnerId: string) =>
+    request<ReviewQueue>(`/review-queue?learnerId=${encodeURIComponent(learnerId)}`),
   getStudyQuestions: (id: string) =>
     request<StudyQuestion[]>(`/study-sessions/${id}/questions`),
   submitStudyAnswer: (
@@ -202,6 +217,11 @@ export const api = {
     feedback: ProgressFeedback
   }) =>
     request<WordProgress>('/progress/feedback', {
+      method: 'POST',
+      body: JSON.stringify(input),
+    }),
+  markProgressMastered: (input: { learnerId: string; wordId: string }) =>
+    request<WordProgress>('/progress/master', {
       method: 'POST',
       body: JSON.stringify(input),
     }),

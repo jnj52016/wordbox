@@ -5,6 +5,7 @@ import { BooksPage } from './pages/BooksPage'
 import { LearnPage } from './pages/LearnPage'
 import { QuizPage } from './pages/QuizPage'
 import { ResultPage } from './pages/ResultPage'
+import { ReviewPage } from './pages/ReviewPage'
 import { SettingsPage } from './pages/SettingsPage'
 import { UnitWordsPage } from './pages/UnitWordsPage'
 import { useLearner } from './learner/useLearner'
@@ -45,6 +46,7 @@ export default function App() {
         </Link>
         <nav className="app-nav">
           <Link to="/books">词书</Link>
+          <Link to="/review">复习</Link>
           <Link to="/settings">设置</Link>
         </nav>
         <span className="learner-status">
@@ -61,6 +63,7 @@ export default function App() {
           <Route path="/learn/:unitId" element={<LearnPage />} />
           <Route path="/quiz/:sessionId" element={<QuizPage />} />
           <Route path="/result/:sessionId" element={<ResultPage />} />
+          <Route path="/review" element={<ReviewPage />} />
           <Route path="/settings" element={<SettingsPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>

@@ -126,7 +126,15 @@ export function QuizPage() {
           </Typography.Text>
         </div>
         <Button>
-          <Link to={`/learn/${sessionQuery.data.unitId}`}>返回学习</Link>
+          <Link
+            to={
+              sessionQuery.data.mode === 'REVIEW'
+                ? '/review'
+                : `/learn/${sessionQuery.data.unitId}`
+            }
+          >
+            返回学习
+          </Link>
         </Button>
       </div>
 

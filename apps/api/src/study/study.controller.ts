@@ -17,6 +17,7 @@ import {
 } from '@nestjs/swagger'
 import {
   CreateStudySessionDto,
+  MarkProgressMasteredDto,
   SubmitProgressFeedbackDto,
   StudyAnswerResultDto,
   StudyQuestionDto,
@@ -105,5 +106,15 @@ export class ProgressController {
   @ApiNotFoundResponse({ description: '学习者或单词不存在' })
   submitFeedback(@Body() dto: SubmitProgressFeedbackDto): Promise<WordProgressDto> {
     return this.studyService.submitProgressFeedback(dto)
+  }
+
+  @Post('master')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: '手动标记单词为已掌握' })
+  @ApiOkResponse({ type: WordProgressDto })
+  @ApiBadRequestResponse({ description: '标记参数不正确' })
+  @ApiNotFoundResponse({ description: '学习者或单词不存在' })
+  markMastered(@Body() dto: MarkProgressMasteredDto): Promise<WordProgressDto> {
+    return this.studyService.markProgressMastered(dto)
   }
 }

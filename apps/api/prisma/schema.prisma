@@ -74,6 +74,7 @@ model Word {
   unit         Unit           @relation(fields: [unitId], references: [id], onDelete: Cascade)
   progresses   WordProgress[]
   answers      AnswerRecord[]
+  sessionWords StudySessionWord[]
 
   @@unique([unitId, order])
   @@index([spelling])
@@ -111,6 +112,20 @@ model StudySession {
   learner      Learner        @relation(fields: [learnerId], references: [id], onDelete: Cascade)
   unit         Unit?          @relation(fields: [unitId], references: [id], onDelete: SetNull)
   answers      AnswerRecord[]
+  sessionWords StudySessionWord[]
+}
+
+model StudySessionWord {
+  id        String       @id @default(cuid())
+  sessionId String
+  wordId    String
+  order     Int
+  session   StudySession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  word      Word         @relation(fields: [wordId], references: [id], onDelete: Cascade)
+
+  @@unique([sessionId, wordId])
+  @@unique([sessionId, order])
+  @@index([wordId])
 }
 
 model AnswerRecord {
