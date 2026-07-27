@@ -191,9 +191,12 @@ body {
 }
 
 .book-card,
-.book-detail-card,
 .word-card {
   height: 100%;
+}
+
+.book-detail-card {
+  height: auto;
 }
 
 .card-link {
