@@ -79,8 +79,8 @@ WordBox/
 - [x] 创建 NestJS + TypeScript 的 `apps/api`
 - [x] 配置根目录统一启动命令
 - [x] 配置 TypeScript
-- [ ] 配置 ESLint
-- [ ] 配置 Prettier
+- [x] 配置 ESLint
+- [x] 配置 Prettier
 - [x] 配置 Vitest
 - [x] 添加 `.gitignore`
 - [x] 添加 `.env.example`
@@ -95,6 +95,8 @@ pnpm dev:web
 pnpm dev:api
 pnpm test
 pnpm build
+pnpm lint
+pnpm format:check
 pnpm db:migrate
 pnpm db:seed
 ```
@@ -127,15 +129,15 @@ pnpm db:seed
 
 首版使用以下数据表：
 
-| 数据表 | 用途 |
-| --- | --- |
-| `Learner` | 匿名学习者和每日目标 |
-| `WordBook` | 词书 |
-| `Unit` | 词书单元 |
-| `Word` | 单词、释义、例句和媒体信息 |
-| `WordProgress` | 用户对每个单词的掌握情况 |
-| `StudySession` | 一次学习或复习记录 |
-| `AnswerRecord` | 每一道题的回答结果 |
+| 数据表         | 用途                       |
+| -------------- | -------------------------- |
+| `Learner`      | 匿名学习者和每日目标       |
+| `WordBook`     | 词书                       |
+| `Unit`         | 词书单元                   |
+| `Word`         | 单词、释义、例句和媒体信息 |
+| `WordProgress` | 用户对每个单词的掌握情况   |
+| `StudySession` | 一次学习或复习记录         |
+| `AnswerRecord` | 每一道题的回答结果         |
 
 建议字段：
 
@@ -346,16 +348,16 @@ apps/api/src/
 
 首版使用简单间隔规则：
 
-| 学习结果 | 处理方式 |
-| --- | --- |
-| 答错 | `correctStreak = 0`，次日复习 |
-| 连续答对 1 次 | 1 天后复习 |
-| 连续答对 2 次 | 3 天后复习 |
-| 连续答对 3 次 | 7 天后复习，标记 `MASTERED` |
-| 后续答对 | 14 天、30 天后复习 |
-| 卡片选择“不认识” | 优先放回本轮末尾 |
-| 卡片选择“有印象” | 次日进入复习 |
-| 卡片选择“认识” | 进入正常测验 |
+| 学习结果         | 处理方式                      |
+| ---------------- | ----------------------------- |
+| 答错             | `correctStreak = 0`，次日复习 |
+| 连续答对 1 次    | 1 天后复习                    |
+| 连续答对 2 次    | 3 天后复习                    |
+| 连续答对 3 次    | 7 天后复习，标记 `MASTERED`   |
+| 后续答对         | 14 天、30 天后复习            |
+| 卡片选择“不认识” | 优先放回本轮末尾              |
+| 卡片选择“有印象” | 次日进入复习                  |
+| 卡片选择“认识”   | 进入正常测验                  |
 
 规则实现 TODO：
 
