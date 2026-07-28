@@ -1,6 +1,18 @@
 import { useState } from 'react'
 import { useQueryClient } from '@tanstack/react-query'
-import { Alert, Button, Card, Form, InputNumber, Modal, Space, Switch, Tag, Typography, message } from 'antd'
+import {
+  Alert,
+  Button,
+  Card,
+  Form,
+  InputNumber,
+  Modal,
+  Space,
+  Switch,
+  Tag,
+  Typography,
+  message,
+} from 'antd'
 import { useLearner } from '../learner/useLearner'
 import { api } from '../api/client'
 import { queryKeys } from '../api/queryKeys'
@@ -17,7 +29,11 @@ export function SettingsPage() {
   const [resetting, setResetting] = useState(false)
 
   if (isPending) {
-    return <Card loading className="settings-card" />
+    return (
+      <div className="page-shell settings-shell">
+        <Card loading className="settings-card" />
+      </div>
+    )
   }
 
   if (isError || !learner) {
@@ -69,11 +85,13 @@ export function SettingsPage() {
   }
 
   return (
-    <div className="page-shell">
-      <Typography.Title level={2}>设置</Typography.Title>
-      <Typography.Paragraph type="secondary">
-        调整每日学习目标和单词发音偏好。
-      </Typography.Paragraph>
+    <div className="page-shell settings-shell">
+      <div className="settings-intro">
+        <Typography.Title level={2}>设置</Typography.Title>
+        <Typography.Paragraph type="secondary">
+          调整每日学习目标和单词发音偏好。
+        </Typography.Paragraph>
+      </div>
 
       <Card className="settings-card">
         <Form<SettingsFormValues>
