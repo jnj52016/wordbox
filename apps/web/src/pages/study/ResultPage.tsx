@@ -134,7 +134,9 @@ export function ResultPage() {
         <Space wrap>
           {result.wrongCount > 0 && (
             <Button>
-              <Link to="/review">复习错词</Link>
+              <Link to={`/review?sourceSessionId=${encodeURIComponent(result.session.id)}`}>
+                复习错词
+              </Link>
             </Button>
           )}
           <Button type="primary" disabled={nextUnitPending}>

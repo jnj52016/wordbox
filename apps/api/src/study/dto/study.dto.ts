@@ -37,6 +37,15 @@ export class CreateStudySessionDto {
   @Min(1)
   @Max(20)
   count?: number
+
+  @ApiPropertyOptional({
+    example: 'clxsession123',
+    description: '复习模式下优先复习指定已完成 Session 中的错词',
+  })
+  @IsOptional()
+  @IsString()
+  @MaxLength(64)
+  sourceSessionId?: string
 }
 
 export class SubmitStudyAnswerDto {

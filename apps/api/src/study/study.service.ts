@@ -154,7 +154,9 @@ export class StudyService {
 
     const words =
       mode === StudyMode.REVIEW
-        ? await this.findReviewWords(learner.id, dto.count ?? 10)
+        ? dto.sourceSessionId
+          ? await this.findWrongWordsFromSession(learner.id, dto.sourceSessionId, dto.count ?? 10)
+          : await this.findReviewWords(learner.id, dto.count ?? 10)
         : await this.findSessionWords(dto.unitId!, dto.count ?? 10)
     if (words.length === 0) {
       throw new BadRequestException(
@@ -234,9 +236,7 @@ export class StudyService {
       submittedAnswer: answer.submittedAnswer,
       isCorrect: answer.isCorrect,
       correctAnswer: this.getCorrectAnswer(answer.questionType, answer.word),
-      progress: answer.word.progresses[0]
-        ? toProgressDto(answer.word.progresses[0])
-        : null,
+      progress: answer.word.progresses[0] ? toProgressDto(answer.word.progresses[0]) : null,
     }))
 
     return {
@@ -261,10 +261,7 @@ export class StudyService {
     return words.map((word, index) => this.toQuestion(session.id, word, index, words))
   }
 
-  async submitAnswer(
-    sessionId: string,
-    dto: SubmitStudyAnswerDto,
-  ): Promise<StudyAnswerResultDto> {
+  async submitAnswer(sessionId: string, dto: SubmitStudyAnswerDto): Promise<StudyAnswerResultDto> {
     const session = await this.findSession(sessionId)
     const question = await this.findQuestion(session, dto.questionId)
 
@@ -521,6 +518,34 @@ export class StudyService {
     })
 
     return progresses.map((progress) => progress.word)
+  }
+
+  private async findWrongWordsFromSession(
+    learnerId: string,
+    sourceSessionId: string,
+    count: number,
+  ): Promise<StudyWord[]> {
+    const sourceSession = await this.prisma.studySession.findUnique({
+      where: { id: sourceSessionId },
+      select: { learnerId: true, completedAt: true },
+    })
+
+    if (!sourceSession || sourceSession.learnerId !== learnerId) {
+      throw new NotFoundException('来源学习 Session 不存在')
+    }
+
+    if (!sourceSession.completedAt) {
+      throw new BadRequestException('来源学习 Session 尚未完成')
+    }
+
+    const answers = await this.prisma.answerRecord.findMany({
+      where: { sessionId: sourceSessionId, isCorrect: false },
+      orderBy: { createdAt: 'asc' },
+      take: count,
+      select: { word: { select: studyWordFields } },
+    })
+
+    return answers.map((answer) => answer.word)
   }
 
   private async findSessionWordsForSession(

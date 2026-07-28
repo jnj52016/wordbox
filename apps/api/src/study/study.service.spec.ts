@@ -109,6 +109,45 @@ describe('StudyService', () => {
     })
   })
 
+  it('creates a review session from wrong answers in a completed source session', async () => {
+    vi.mocked(prisma.studySession.findUnique).mockResolvedValue({
+      learnerId: 'learner-db-1',
+      completedAt: new Date('2026-07-27T12:10:00.000Z'),
+    } as never)
+    vi.mocked(prisma.answerRecord.findMany).mockResolvedValue([
+      { word: words[0] },
+      { word: words[2] },
+    ] as never)
+    vi.mocked(prisma.studySession.create).mockResolvedValue({
+      ...session,
+      mode: StudyMode.REVIEW,
+      unitId: null,
+      totalCount: 2,
+    } as never)
+
+    await expect(
+      service.createSession({
+        learnerId: 'learner-1',
+        mode: StudyMode.REVIEW,
+        count: 2,
+        sourceSessionId: 'session-1',
+      }),
+    ).resolves.toMatchObject({ mode: StudyMode.REVIEW, totalCount: 2 })
+
+    expect(prisma.answerRecord.findMany).toHaveBeenCalledWith({
+      where: { sessionId: 'session-1', isCorrect: false },
+      orderBy: { createdAt: 'asc' },
+      take: 2,
+      select: { word: { select: expect.any(Object) } },
+    })
+    expect(prisma.studySessionWord.createMany).toHaveBeenCalledWith({
+      data: [
+        { sessionId: 'session-1', wordId: 'word-1', order: 0 },
+        { sessionId: 'session-1', wordId: 'word-3', order: 1 },
+      ],
+    })
+  })
+
   it('generates all three question types without exposing the standard answer', async () => {
     const questions = await service.getQuestions('session-1')
 

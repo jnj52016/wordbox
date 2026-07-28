@@ -45,6 +45,7 @@ export const api = {
     unitId?: string
     mode?: StudyMode
     count?: number
+    sourceSessionId?: string
   }) =>
     request<StudySession>('/study-sessions', {
       method: 'POST',
