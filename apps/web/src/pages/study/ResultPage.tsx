@@ -37,7 +37,7 @@ function ResultWordList({
       renderItem={(answer) => (
         <List.Item>
           <List.Item.Meta
-            avatar={<span className="result-word-emoji">{answer.emoji ?? '📝'}</span>}
+            avatar={<span className="inline-block w-7 text-center">{answer.emoji ?? '📝'}</span>}
             title={
               <Space wrap>
                 <span>{answer.spelling}</span>
@@ -86,13 +86,13 @@ export function ResultPage() {
   }, [queryClient, resultQuery.data])
 
   if (resultQuery.isPending) {
-    return <div className="page-state">正在加载学习结果…</div>
+    return <div className="mx-auto my-20 text-center">正在加载学习结果…</div>
   }
 
   if (!sessionId || resultQuery.isError) {
     return (
       <Alert
-        className="page-state page-state-error"
+        className="mx-auto my-20 block max-w-[640px] text-left"
         type="error"
         showIcon
         message={!sessionId ? '结果地址无效' : '学习结果加载失败'}
@@ -118,15 +118,17 @@ export function ResultPage() {
   const nextUnitPending = result.session.mode === 'LEARN' && unitQuery.isPending
 
   return (
-    <div className="page-shell result-shell">
+    <div className="w-full max-w-[900px]">
       <Breadcrumb
-        className="page-breadcrumb"
+        className="mb-5"
         items={[{ title: <Link to="/books">词书</Link> }, { title: '学习结果' }]}
       />
 
-      <div className="section-heading">
+      <div className="my-8 flex items-center justify-between gap-6 max-[480px]:items-start max-[480px]:flex-col">
         <div>
-          <Typography.Title level={2}>学习结果</Typography.Title>
+          <Typography.Title className="!mt-0 !mb-2" level={2}>
+            学习结果
+          </Typography.Title>
           <Typography.Text type="secondary">
             本次完成 {result.session.totalCount} 个单词
           </Typography.Text>
@@ -164,7 +166,7 @@ export function ResultPage() {
         </Space>
       </div>
 
-      <div className="result-stat-grid">
+      <div className="grid grid-cols-3 gap-4 max-[480px]:grid-cols-1">
         <Card>
           <Statistic
             title="答对"
@@ -180,7 +182,7 @@ export function ResultPage() {
         </Card>
       </div>
 
-      <div className="result-category-grid">
+      <div className="mt-6 grid grid-cols-3 gap-4 max-[480px]:grid-cols-1 [&_.ant-card]:min-w-0 [&_.ant-list-item]:items-start [&_.ant-list-item]:gap-3 [&_.ant-list-item-meta]:min-w-0 [&_.ant-list-item-meta-avatar]:text-2xl">
         <Card
           title={
             <Space>

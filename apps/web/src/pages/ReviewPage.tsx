@@ -79,7 +79,7 @@ export function ReviewPage() {
   if (learnerQuery.isError || queueQuery.isError || sourceResultQuery.isError) {
     return (
       <Alert
-        className="page-state page-state-error"
+        className="mx-auto my-20 block max-w-[640px] text-left"
         type="error"
         showIcon
         message="复习内容加载失败"
@@ -102,7 +102,7 @@ export function ReviewPage() {
     queueQuery.isPending ||
     (Boolean(sourceSessionId) && sourceResultQuery.isPending)
   ) {
-    return <Spin className="page-state" size="large" tip="正在加载复习内容…" />
+    return <Spin className="mx-auto my-20 block text-center" size="large" tip="正在加载复习内容…" />
   }
 
   const queue = queueQuery.data
@@ -114,10 +114,12 @@ export function ReviewPage() {
   const hasSourceWords = sourceWords.length > 0
 
   return (
-    <div className="page-shell review-shell">
-      <div className="section-heading">
+    <div className="w-full max-w-[1080px]">
+      <div className="my-8 flex items-center justify-between gap-6 max-[480px]:items-start max-[480px]:flex-col">
         <div>
-          <Typography.Title level={2}>错词复习</Typography.Title>
+          <Typography.Title className="!mt-0 !mb-2" level={2}>
+            错词复习
+          </Typography.Title>
           <Typography.Text type="secondary">
             {hasSourceWords
               ? `本轮有 ${sourceWords.length} 个错词，已优先安排复习`
@@ -136,7 +138,7 @@ export function ReviewPage() {
 
       {startMutation.isError && (
         <Alert
-          className="review-feedback"
+          className="mb-5"
           type="error"
           showIcon
           message="复习 Session 创建失败"
@@ -147,7 +149,7 @@ export function ReviewPage() {
 
       {masteredMutation.isError && (
         <Alert
-          className="review-feedback"
+          className="mb-5"
           type="error"
           showIcon
           message="标记掌握失败"
@@ -162,23 +164,27 @@ export function ReviewPage() {
         </Card>
       ) : (
         <List
-          className="review-list"
+          className="mt-6"
           grid={{ gutter: 16, xs: 1, sm: 2, lg: 3 }}
           dataSource={words}
           renderItem={(word) => (
             <List.Item>
-              <Card className="review-word-card">
-                <div className="word-card-title">
-                  <span className="word-emoji">{word.emoji ?? '📝'}</span>
-                  <Typography.Title level={4}>{word.spelling}</Typography.Title>
+              <Card className="h-full">
+                <div className="flex items-center gap-2">
+                  <span className="text-3xl">{word.emoji ?? '📝'}</span>
+                  <Typography.Title className="!my-0" level={4}>
+                    {word.spelling}
+                  </Typography.Title>
                 </div>
                 <Typography.Text type="secondary">{word.phonetic ?? '暂无音标'}</Typography.Text>
-                <Typography.Paragraph className="word-meaning">{word.meaning}</Typography.Paragraph>
+                <Typography.Paragraph className="my-3 mb-2 text-base">
+                  {word.meaning}
+                </Typography.Paragraph>
                 <Space wrap>
                   <Tag color="red">错误 {word.wrongCount} 次</Tag>
                   <Tag>{word.status === 'MASTERED' ? '已掌握' : '学习中'}</Tag>
                 </Space>
-                <Typography.Paragraph type="secondary" className="review-time">
+                <Typography.Paragraph type="secondary" className="my-4 mb-3 text-xs">
                   下次复习：{new Date(word.nextReviewAt).toLocaleString()}
                 </Typography.Paragraph>
                 <Button

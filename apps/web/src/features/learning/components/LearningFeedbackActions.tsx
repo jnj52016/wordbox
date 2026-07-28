@@ -14,13 +14,14 @@ export function LearningFeedbackActions({
 }) {
   return (
     <>
-      <Typography.Paragraph className="learning-prompt" type="secondary">
+      <Typography.Paragraph className="my-7 mb-3" type="secondary">
         你对这个单词的熟悉程度如何？
       </Typography.Paragraph>
-      <Space className="learning-actions" wrap>
+      <Space className="justify-center max-[480px]:flex max-[480px]:w-full" wrap>
         <Button
           autoInsertSpace={false}
           danger
+          className="max-[480px]:flex-1"
           size="large"
           disabled={disabled}
           onClick={() => onFeedback('unknown')}
@@ -29,6 +30,7 @@ export function LearningFeedbackActions({
         </Button>
         <Button
           autoInsertSpace={false}
+          className="max-[480px]:flex-1"
           size="large"
           disabled={disabled}
           onClick={() => onFeedback('familiar')}
@@ -38,6 +40,7 @@ export function LearningFeedbackActions({
         <Button
           autoInsertSpace={false}
           type="primary"
+          className="max-[480px]:flex-1"
           size="large"
           disabled={disabled}
           onClick={() => onFeedback('known')}
@@ -47,7 +50,7 @@ export function LearningFeedbackActions({
       </Space>
       {error && (
         <Alert
-          className="quiz-feedback"
+          className="mt-6 text-left"
           type="error"
           showIcon
           message="学习反馈提交失败"

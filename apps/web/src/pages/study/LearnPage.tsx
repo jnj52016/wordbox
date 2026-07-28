@@ -12,13 +12,13 @@ export function LearnPage() {
   const words = flow.wordsQuery.data
 
   if (flow.wordsQuery.isPending || flow.learnerQuery.isPending) {
-    return <Spin className="page-state" size="large" tip="正在准备学习内容…" />
+    return <Spin className="mx-auto my-20 block text-center" size="large" tip="正在准备学习内容…" />
   }
 
   if (!unitId || !learner || !words || flow.wordsQuery.isError || flow.learnerQuery.isError) {
     return (
       <Alert
-        className="page-state page-state-error"
+        className="mx-auto my-20 block max-w-[640px] text-left"
         type="error"
         showIcon
         message={!unitId ? '单元地址无效' : '学习内容加载失败'}
@@ -33,16 +33,14 @@ export function LearnPage() {
   }
 
   if (flow.initialWords.length === 0) {
-    return <Empty className="page-state" description="这个单元还没有可学习的单词" />
+    return <Empty className="mx-auto my-20 text-center" description="这个单元还没有可学习的单词" />
   }
 
   if (!flow.currentWord) {
     return (
-      <Card className="learning-complete-card">
+      <Card className="mx-auto my-20 w-full max-w-[640px] text-center">
         <Typography.Title level={2}>本轮学习完成</Typography.Title>
-        <Typography.Paragraph type="secondary">
-          正在创建测验 Session…
-        </Typography.Paragraph>
+        <Typography.Paragraph type="secondary">正在创建测验 Session…</Typography.Paragraph>
         {flow.createSessionMutation.isError && (
           <Alert
             type="error"
@@ -63,7 +61,7 @@ export function LearnPage() {
     flow.feedbackMutation.isPending
 
   return (
-    <div className="page-shell learning-shell">
+    <div className="w-full max-w-[760px]">
       <LearningHeader
         unitId={unitId}
         unitName={words.unit.name}

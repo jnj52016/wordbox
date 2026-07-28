@@ -2,11 +2,11 @@ import { Alert, Button, Empty, Spin } from 'antd'
 import { Link } from 'react-router-dom'
 
 export function LoadingState({ tip = '正在加载…' }: { tip?: string }) {
-  return <Spin className="page-state" size="large" tip={tip} />
+  return <Spin className="mx-auto my-20 block text-center" size="large" tip={tip} />
 }
 
 export function EmptyState({ description }: { description: string }) {
-  return <Empty className="page-state" description={description} />
+  return <Empty className="mx-auto my-20 text-center" description={description} />
 }
 
 export function ErrorState({
@@ -24,7 +24,7 @@ export function ErrorState({
 }) {
   return (
     <Alert
-      className="page-state page-state-error"
+      className="mx-auto my-20 block max-w-[640px] text-left"
       type="error"
       showIcon
       message={message}

@@ -20,7 +20,7 @@ export function QuizAnswerControls({
 }) {
   if (question.questionType === 'SPELLING') {
     return (
-      <Space.Compact className="quiz-input">
+      <Space.Compact className="w-full max-w-[560px]">
         <Input
           value={inputValue}
           placeholder="输入英文拼写"
@@ -41,10 +41,11 @@ export function QuizAnswerControls({
   }
 
   return (
-    <div className="quiz-options">
+    <div className="mx-auto grid w-full max-w-[560px] grid-cols-2 gap-3 max-[480px]:grid-cols-1">
       {question.options.map((option) => (
         <Button
           key={option}
+          className="h-auto min-h-[52px] whitespace-normal"
           size="large"
           type={answerResult && option === answerResult.correctAnswer ? 'primary' : 'default'}
           danger={Boolean(answerResult && option !== answerResult.correctAnswer)}

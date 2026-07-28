@@ -11,13 +11,13 @@ export function BooksPage() {
   })
 
   if (query.isPending) {
-    return <Spin className="page-state" size="large" tip="正在加载词书…" />
+    return <Spin className="mx-auto my-20 block text-center" size="large" tip="正在加载词书…" />
   }
 
   if (query.isError) {
     return (
       <Alert
-        className="page-state page-state-error"
+        className="mx-auto my-20 block max-w-[640px] text-left"
         type="error"
         showIcon
         message="词书加载失败"
@@ -28,15 +28,17 @@ export function BooksPage() {
   }
 
   if (query.data.length === 0) {
-    return <Empty className="page-state" description="还没有可用词书" />
+    return <Empty className="mx-auto my-20 text-center" description="还没有可用词书" />
   }
 
   return (
-    <div className="page-shell">
-      <div className="page-heading">
+    <div className="w-full max-w-[1080px]">
+      <div className="flex items-center justify-between">
         <div>
-          <Typography.Title level={2}>词书</Typography.Title>
-          <Typography.Paragraph type="secondary">
+          <Typography.Title className="!mt-0 !mb-2" level={2}>
+            词书
+          </Typography.Title>
+          <Typography.Paragraph className="!mb-0" type="secondary">
             选择一本词书，开始你的今日学习。
           </Typography.Paragraph>
         </div>
@@ -45,13 +47,13 @@ export function BooksPage() {
       <Row gutter={[20, 20]}>
         {query.data.map((book) => (
           <Col key={book.id} xs={24} sm={12} lg={8}>
-            <Link className="card-link" to={`/books/${book.id}`}>
+            <Link className="block h-full text-inherit" to={`/books/${book.id}`}>
               <Card
-                className="book-card"
+                className="h-full"
                 hoverable
                 cover={
                   <div
-                    className="book-cover"
+                    className="grid h-[140px] place-items-center text-5xl font-bold text-white/90"
                     style={{ backgroundColor: book.coverColor ?? '#2563eb' }}
                   >
                     <span>{book.name.slice(0, 1)}</span>
@@ -62,7 +64,7 @@ export function BooksPage() {
                 <Typography.Paragraph ellipsis={{ rows: 2 }} type="secondary">
                   {book.description ?? '开始一段新的单词学习。'}
                 </Typography.Paragraph>
-                <div className="book-meta">
+                <div className="flex flex-wrap items-center gap-2">
                   <Tag color="blue">{book.level ?? '未分级'}</Tag>
                   <Typography.Text type="secondary">
                     {book.unitCount} 个单元 · {book.wordCount} 个单词

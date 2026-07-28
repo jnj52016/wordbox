@@ -24,11 +24,17 @@ export function QuizPage() {
   }
 
   if (!flow.question || flow.questions.length === 0) {
-    return <Alert className="page-state" type="warning" message="当前 Session 没有题目" />
+    return (
+      <Alert
+        className="mx-auto my-20 block text-center"
+        type="warning"
+        message="当前 Session 没有题目"
+      />
+    )
   }
 
   return (
-    <div className="page-shell learning-shell">
+    <div className="w-full max-w-[760px]">
       <QuizHeader
         mode={session.mode}
         unitId={session.unitId}

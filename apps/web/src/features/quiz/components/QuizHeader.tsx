@@ -19,12 +19,14 @@ export function QuizHeader({
   return (
     <>
       <Breadcrumb
-        className="page-breadcrumb"
+        className="mb-5"
         items={[{ title: <Link to="/books">词书</Link> }, { title: '测验' }]}
       />
-      <div className="section-heading learning-heading">
+      <div className="mt-0 mb-4 flex items-center justify-between gap-6 max-[480px]:items-start max-[480px]:flex-col">
         <div>
-          <Typography.Title level={2}>单词测验</Typography.Title>
+          <Typography.Title className="!mt-0 !mb-2" level={2}>
+            单词测验
+          </Typography.Title>
           <Typography.Text type="secondary">
             第 {questionIndex + 1} / {total} 题
           </Typography.Text>

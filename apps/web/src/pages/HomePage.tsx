@@ -17,7 +17,7 @@ export function HomePage() {
   if (learnerQuery.isError || dashboardQuery.isError) {
     return (
       <Alert
-        className="page-state page-state-error"
+        className="mx-auto my-20 block max-w-[640px] text-left"
         type="error"
         showIcon
         message="首页数据加载失败"
@@ -32,7 +32,7 @@ export function HomePage() {
   }
 
   if (learnerQuery.isPending || dashboardQuery.isPending) {
-    return <Spin className="page-state" size="large" tip="正在加载首页…" />
+    return <Spin className="mx-auto my-20 block text-center" size="large" tip="正在加载首页…" />
   }
 
   const dashboard = dashboardQuery.data
@@ -42,24 +42,26 @@ export function HomePage() {
       : Math.min(100, Math.round((dashboard.todayLearnedCount / dashboard.dailyGoal) * 100))
 
   return (
-    <div className="page-shell dashboard-shell">
-      <div className="dashboard-hero">
+    <div className="w-full max-w-[1080px]">
+      <div className="mb-6 flex items-end justify-between gap-6 max-[480px]:items-start max-[480px]:flex-col">
         <div>
           <Typography.Text type="secondary">WordBox</Typography.Text>
-          <Typography.Title level={1}>今天也来学几个单词</Typography.Title>
-          <Typography.Paragraph type="secondary">
+          <Typography.Title className="!my-2" level={1}>
+            今天也来学几个单词
+          </Typography.Title>
+          <Typography.Paragraph className="!mb-0" type="secondary">
             {dashboard.reviewDueCount > 0
               ? `有 ${dashboard.reviewDueCount} 个单词等待复习，先巩固再学习。`
               : '保持节奏，持续积累你的词汇量。'}
           </Typography.Paragraph>
         </div>
-        <Space wrap>
+        <Space className="max-[480px]:w-full" wrap>
           {dashboard.reviewDueCount > 0 && (
-            <Button type="primary" size="large">
+            <Button className="max-[480px]:flex-1" type="primary" size="large">
               <Link to="/review">开始复习</Link>
             </Button>
           )}
-          <Button size="large">
+          <Button className="max-[480px]:flex-1" size="large">
             <Link to="/books">开始今日学习</Link>
           </Button>
         </Space>
@@ -67,7 +69,7 @@ export function HomePage() {
 
       {!dashboard.hasLearningHistory && (
         <Alert
-          className="dashboard-onboarding"
+          className="mb-6"
           type="info"
           showIcon
           message="欢迎开始第一次学习"
@@ -75,7 +77,7 @@ export function HomePage() {
         />
       )}
 
-      <div className="dashboard-stat-grid">
+      <div className="grid grid-cols-4 gap-4 max-[480px]:grid-cols-2">
         <Card>
           <Statistic title="今日已学习" value={dashboard.todayLearnedCount} suffix="词" />
         </Card>
@@ -90,18 +92,20 @@ export function HomePage() {
         </Card>
       </div>
 
-      <Card title={`每日目标：${dashboard.dailyGoal} 词`} className="dashboard-goal-card">
+      <Card title={`每日目标：${dashboard.dailyGoal} 词`} className="mt-6">
         <Progress percent={goalPercent} />
         <Typography.Text type="secondary">
           今天完成 {dashboard.todayLearnedCount} / {dashboard.dailyGoal} 词
         </Typography.Text>
       </Card>
 
-      <Card title="当前词书进度" className="dashboard-book-card">
+      <Card title="当前词书进度" className="mt-6">
         {dashboard.currentWordBook ? (
           <>
-            <div className="dashboard-book-heading">
-              <Typography.Title level={4}>{dashboard.currentWordBook.name}</Typography.Title>
+            <div className="flex items-baseline justify-between gap-4">
+              <Typography.Title className="!mt-0" level={4}>
+                {dashboard.currentWordBook.name}
+              </Typography.Title>
               <Typography.Text type="secondary">
                 {dashboard.currentWordBook.masteredWordCount} /{' '}
                 {dashboard.currentWordBook.totalWordCount} 词已掌握

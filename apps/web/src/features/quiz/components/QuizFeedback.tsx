@@ -14,7 +14,7 @@ export function QuizFeedback({
 }) {
   return (
     <Alert
-      className="quiz-feedback"
+      className="mt-6 text-left"
       type={result.isCorrect ? 'success' : 'error'}
       showIcon
       message={result.isCorrect ? '回答正确' : '回答错误'}

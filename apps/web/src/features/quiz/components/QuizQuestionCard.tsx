@@ -29,7 +29,7 @@ export function QuizQuestionCard({
   onResetError: () => void
 }) {
   return (
-    <Card className="learning-card quiz-card">
+    <Card className="mt-6 p-7 text-center max-[480px]:px-4 max-[480px]:py-5">
       <Typography.Text type="secondary">
         {question.questionType === 'EN_TO_ZH'
           ? '看英文选中文'
@@ -37,10 +37,14 @@ export function QuizQuestionCard({
             ? '看中文选英文'
             : '英文拼写'}
       </Typography.Text>
-      <div className="quiz-prompt">
-        {question.emoji && <span className="word-emoji">{question.emoji}</span>}
-        <Typography.Title level={1}>{question.prompt}</Typography.Title>
-        {question.phonetic && <Typography.Text type="secondary">{question.phonetic}</Typography.Text>}
+      <div className="my-7">
+        {question.emoji && <span className="text-3xl">{question.emoji}</span>}
+        <Typography.Title className="!my-2" level={1}>
+          {question.prompt}
+        </Typography.Title>
+        {question.phonetic && (
+          <Typography.Text type="secondary">{question.phonetic}</Typography.Text>
+        )}
       </div>
 
       <QuizAnswerControls
@@ -55,7 +59,7 @@ export function QuizQuestionCard({
 
       {answerError && (
         <Alert
-          className="quiz-feedback"
+          className="mt-6 text-left"
           type="error"
           showIcon
           message="提交失败"

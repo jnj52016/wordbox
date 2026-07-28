@@ -30,8 +30,8 @@ export function SettingsPage() {
 
   if (isPending) {
     return (
-      <div className="page-shell settings-shell">
-        <Card loading className="settings-card" />
+      <div className="w-full max-w-[640px]">
+        <Card loading className="mb-5" />
       </div>
     )
   }
@@ -39,7 +39,7 @@ export function SettingsPage() {
   if (isError || !learner) {
     return (
       <Alert
-        className="page-state page-state-error"
+        className="mx-auto my-20 block max-w-[640px] text-left"
         type="error"
         showIcon
         message="学习者信息加载失败"
@@ -85,15 +85,17 @@ export function SettingsPage() {
   }
 
   return (
-    <div className="page-shell settings-shell">
-      <div className="settings-intro">
-        <Typography.Title level={2}>设置</Typography.Title>
-        <Typography.Paragraph type="secondary">
+    <div className="w-full max-w-[640px]">
+      <div className="mb-6 text-center">
+        <Typography.Title className="!mb-2" level={2}>
+          设置
+        </Typography.Title>
+        <Typography.Paragraph className="!mb-0" type="secondary">
           调整每日学习目标和单词发音偏好。
         </Typography.Paragraph>
       </div>
 
-      <Card className="settings-card">
+      <Card className="mb-5">
         <Form<SettingsFormValues>
           layout="vertical"
           initialValues={{ dailyGoal: learner.dailyGoal, autoPronounce: learner.autoPronounce }}
@@ -120,7 +122,7 @@ export function SettingsPage() {
         </Form>
       </Card>
 
-      <Card className="settings-card">
+      <Card className="mb-5">
         <Typography.Title level={4}>匿名学习者</Typography.Title>
         <Space direction="vertical" size="small">
           <Typography.Text type="secondary">当前身份 ID</Typography.Text>
@@ -129,8 +131,10 @@ export function SettingsPage() {
         </Space>
       </Card>
 
-      <Card className="settings-card danger-card">
-        <Typography.Title level={4}>重置学习进度</Typography.Title>
+      <Card className="mb-5 border-red-200">
+        <Typography.Title className="!mt-0" level={4}>
+          重置学习进度
+        </Typography.Title>
         <Typography.Paragraph type="secondary">
           保留匿名身份和设置，只删除学习记录、答题记录和单词掌握进度。
         </Typography.Paragraph>
