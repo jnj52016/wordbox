@@ -1,4 +1,5 @@
-import { Layout } from 'antd'
+import { Layout, Tooltip } from 'antd'
+import { useState } from 'react'
 import type { ReactNode } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import { useLearner } from '../../learner/useLearner'
@@ -12,22 +13,29 @@ const navigationItems = [
   { to: '/settings', label: '设置' },
 ]
 
-function Navigation({ className = '' }: { className?: string }) {
+function Navigation({
+  className = '',
+  collapsed = false,
+}: {
+  className?: string
+  collapsed?: boolean
+}) {
   return (
     <nav className={className} aria-label="主导航">
       {navigationItems.map((item) => (
-        <NavLink
-          key={item.to}
-          to={item.to}
-          end={item.end}
-          className={({ isActive }) =>
-            `block rounded-[10px] px-3 py-[11px] text-slate-500 transition-colors hover:bg-blue-50 hover:text-blue-600 ${
-              isActive ? 'bg-blue-50 text-blue-600' : ''
-            }`
-          }
-        >
-          {item.label}
-        </NavLink>
+        <Tooltip key={item.to} title={collapsed ? item.label : undefined} placement="right">
+          <NavLink
+            to={item.to}
+            end={item.end}
+            className={({ isActive }) =>
+              `block rounded-[10px] px-3 py-[11px] text-slate-500 transition-colors hover:bg-blue-50 hover:text-blue-600 ${
+                collapsed ? 'text-center' : ''
+              } ${isActive ? 'bg-blue-50 text-blue-600' : ''}`
+            }
+          >
+            {collapsed ? item.label.slice(0, 1) : item.label}
+          </NavLink>
+        </Tooltip>
       ))}
     </nav>
   )
@@ -35,15 +43,32 @@ function Navigation({ className = '' }: { className?: string }) {
 
 export function AppShell({ children }: { children: ReactNode }) {
   const learnerQuery = useLearner()
+  const [collapsed, setCollapsed] = useState(false)
 
   return (
     <Layout className="min-h-screen bg-slate-50 font-sans">
+      <Layout.Sider
+        collapsible
+        collapsed={collapsed}
+        collapsedWidth={72}
+        onCollapse={setCollapsed}
+        className="border-r border-slate-200 bg-white max-[480px]:hidden [&_.ant-layout-sider-children]:flex [&_.ant-layout-sider-children]:flex-col [&_.ant-layout-sider-children]:px-4 [&_.ant-layout-sider-children]:py-6 [&_.ant-layout-sider-trigger]:border-t [&_.ant-layout-sider-trigger]:border-slate-200 [&_.ant-layout-sider-trigger]:bg-white [&_.ant-layout-sider-trigger]:text-slate-500"
+        width={224}
+        theme="light"
+      >
+        <Link
+          className={`pb-7 text-xl font-bold text-slate-900 ${collapsed ? 'px-0 text-center' : 'px-3'}`}
+          to="/"
+        >
+          {collapsed ? 'W' : 'WordBox'}
+        </Link>
+        <Navigation className="flex flex-col gap-2" collapsed={collapsed} />
+      </Layout.Sider>
       <Layout>
         <Header className="flex items-center border-b border-slate-200 bg-white px-6 max-[480px]:h-14 max-[480px]:px-4">
-          <Link className="text-xl font-bold text-slate-900" to="/">
+          <Link className="hidden text-xl font-bold text-slate-900 max-[480px]:inline" to="/">
             WordBox
           </Link>
-          <Navigation className="ml-8 flex items-center gap-2 max-[480px]:hidden" />
           <span className="ml-auto text-xs text-slate-400">
             {learnerQuery.isPending && '身份同步中'}
             {learnerQuery.isError && '身份同步失败'}
