@@ -33,7 +33,7 @@ function Navigation({
               } ${isActive ? 'bg-blue-50 text-blue-600' : ''}`
             }
           >
-            {collapsed ? item.label.slice(0, 1) : item.label}
+            {item.label}
           </NavLink>
         </Tooltip>
       ))}
@@ -52,7 +52,7 @@ export function AppShell({ children }: { children: ReactNode }) {
         collapsed={collapsed}
         collapsedWidth={72}
         onCollapse={setCollapsed}
-        className="border-r border-slate-200 bg-white max-[480px]:hidden [&_.ant-layout-sider-children]:flex [&_.ant-layout-sider-children]:flex-col [&_.ant-layout-sider-children]:px-4 [&_.ant-layout-sider-children]:py-6 [&_.ant-layout-sider-trigger]:border-t [&_.ant-layout-sider-trigger]:border-slate-200 [&_.ant-layout-sider-trigger]:bg-white [&_.ant-layout-sider-trigger]:text-slate-500"
+        className="bg-white shadow-none max-[480px]:hidden [&_.ant-layout-sider-children]:flex [&_.ant-layout-sider-children]:flex-col [&_.ant-layout-sider-children]:px-4 [&_.ant-layout-sider-children]:py-6 [&_.ant-layout-sider-trigger]:border-0 [&_.ant-layout-sider-trigger]:bg-white [&_.ant-layout-sider-trigger]:text-slate-500"
         width={224}
         theme="light"
       >

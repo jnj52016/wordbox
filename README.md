@@ -2,6 +2,10 @@
 
 WordBox 是一个移动端适配的轻量背单词网站，当前处于 MVP 初始化阶段。
 
+## 界面预览
+
+![WordBox 界面预览](./docs/screenshots/wordbox-ui-preview.png)
+
 ## 项目结构
 
 ```text
